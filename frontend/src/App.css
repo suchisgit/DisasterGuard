@@ -1,0 +1,46 @@
+.membership-card{
+  opacity : 0.6;
+}
+
+.memberships{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.center{
+  text-align: center;
+}
+.row{
+  margin-top: 20px;
+}
+
+.activity{
+  width: 15rem;
+}
+.margin-tops{
+  margin-top: 20px;
+}
+
+.side{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.enroll{
+  display: flex;
+  justify-content: space-around;
+}
+.freetrial{
+  display: flex;
+  justify-content: center;
+  gap : 20px;
+}
+
+.ip2 {
+  border-radius: 25px;
+  border: 2px solid #6c757d;
+  padding: 20px; 
+  width: 200px;
+  height: 15px;  
+}

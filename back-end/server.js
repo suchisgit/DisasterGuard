@@ -1,12 +1,18 @@
+require('dotenv').config();
+
 const express = require('express')
 const mongoose = require('mongoose');
 const app = express()
 const port = 3001
-
-
 const User = require('./model/userModel')
-
 const cors = require("cors")
+const Gemini_API_KEY = process.env.API_KEY;
+const {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} = require("@google/generative-ai");
+
 
 app.use(
     cors({
@@ -79,5 +85,46 @@ app.use(
         console.log(error)
         res.status(500).json({ message: error.message })
       }
+    })
+
+
+    // openAI api integration to detect if it's a danger word or not
+    app.post('/isDisasterOpenAI', async (req,res) =>{
+      try{
+        const usersInput = req.body.voiceToTextData
+        const prompt = "Strictly give me a one word answer which should be either yes or no, based on the given voice recording data of the person do you think the person is in an emergency situation, here is the voice recording data :" + usersInput + "?"
+        const response = await axios.post('https://api.openai.com/v1/engines/text-davinci-002/completions', {
+            prompt,
+            max_tokens: 5,
+            temperature: 0.7,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+            },
+        });
+      } catch(error){
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
+    // Gemini AI API utilization to detect if it's a danger or not
+    app.get('/isDisaster', async (req,res) =>{
+      try{
+        const MODEL_NAME = "gemini-1.0-pro";
+        const genAI = new GoogleGenerativeAI(Gemini_API_KEY);
+        const usersInput = req.body.voiceToTextData
+        const model = genAI.getGenerativeModel({ model: MODEL_NAME});
+        const prompt = "Strictly give me a one word answer which should be either yes or no, based on the given voice recording data of the person do you think the person is in an emergency situation, here is the voice recording data :" + usersInput + "?"
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text_output = response.text();
+        res.status(200).json({ responseFromAIModel: text_output });
+      }catch(error){
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+
     })
   })

@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthProvider';
 import configData from '../config.json';
 
 function Login() {
-    const { guserID, setguserID } = useContext(AuthContext);
+    // const { guserID, setguserID } = useContext(AuthContext);
     const { guserRole, setguserRole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
@@ -13,28 +13,24 @@ function Login() {
 
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
-    const [userID, setuserID] = useState('');
+    const [email, setemail] = useState('');
     const API = configData.API;
 
     useEffect(() => {
-        if (guserRole == 'Member') {
-            console.log('logged in as member');
-            navigate('/schedule');
+        if (guserRole == 'user') {
+            console.log('logged in as user');
+            navigate('/userpage');
         }
-        else if (guserRole == 'admin') {
-            console.log('logged in as admin');
-            navigate('/enrollusers');
-        }
-        else if (guserRole == 'Non Member') {
-            console.log('logged in as Non-member');
-            navigate('/nonmember');
+        else if (guserRole == 'volunteer') {
+            console.log('logged in as volunteer');
+            navigate('/volunteerpage');
         }
     }, [guserRole]);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        if (id === "userID") {
-            setuserID(value);
+        if (id === "email") {
+            setemail(value);
         }
         if (id === "password") {
             setPassword(value);
@@ -43,29 +39,24 @@ function Login() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        var user_details = { userId: userID, password: password }
+        var user_details = { email: email, password: password }
         try {
             const response = await axios.post(API +'user/validate', user_details);
             console.log('login successful!', response.data);
-            setguserID(response.data.userId);
             setguserRole(response.data.role);
             setguserEmail(response.data.email);
             setguserName(response.data.name);
-            if (guserRole == 'Member') {
-                console.log('logged in as member');
-                navigate('/schedule');
+            if (guserRole == 'User') {
+                console.log('logged in as user');
+                navigate('/userpage');
             }
-            else if (guserRole == 'admin') {
-                console.log('logged in as admin');
-                navigate('/enrollusers');
-            }
-            else if (guserRole == 'Non Member') {
-                console.log('logged in as Non-member');
-                navigate('/nonmember');
+            else if (guserRole == 'Volunteer') {
+                console.log('logged in as volunteer');
+                navigate('/volunteerpage');
             }
         } catch (error) {
-            alert("Incorrect User ID or Password");
-            setuserID('');
+            alert("Incorrect Email or Password");
+            setemail('');
             setPassword('');
             console.error('login failed!', error.response.data);
         }
@@ -76,12 +67,12 @@ function Login() {
             <div className='col-6 offset-3'>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
-                        <input type="text"  min="4" className="form-control" id="userID" value={userID} onChange={(e) => handleInputChange(e)} required />
+                        <label className="form-label">Email </label>
+                        <input type="text"  min="4" className="form-control" id="email" value={email} onChange={(e) => handleInputChange(e)} required />
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                        <label className="form-label">Password</label>
                         <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} required/>
                     </div>
 
@@ -93,10 +84,6 @@ function Login() {
                         </div>
                     </div>
                 </form>
-                <div>{guserID}</div>
-                <div>{guserRole}</div>
-                <div>{guserEmail}</div>
-                <div>{guserName}</div>
             </div>
         </div>
 

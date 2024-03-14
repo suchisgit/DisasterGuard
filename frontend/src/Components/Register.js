@@ -3,32 +3,30 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import configData from '../config.json';
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from "react-phone-input-2";
 
 function Register() {
-    const { guserID, setguserID } = useContext(AuthContext);
     const { guserRole, setguserRole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
+    const { guserphonenumber, setguserPhonenumber } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userID, setuserID] = useState('');
+    const [phoneNumber, setPhonenumber] = useState('');
     const API = configData.API;
 
     useEffect(() => {
-        if(guserRole == 'Member'){
-            console.log('logged in as member');
-            navigate('/activity');
+        if(guserRole == 'User'){
+            console.log('logged in as user');
+            navigate('/userpage');
         }
-        else if(guserRole == 'admin'){
-            console.log('logged in as admin');
-            navigate('/enrollusers');
-        }
-        else if(guserRole == 'Non Member'){
-            console.log('logged in as Non-member');
-            navigate('/nonmember');
+        else if(guserRole == 'Volunteer'){
+            console.log('logged in as volunteer');
+            navigate('/volunteerpage');
         }
     }, []);
 
@@ -37,26 +35,26 @@ function Register() {
         if (id === "name") {
             setName(value);
         }
-        if (id === "userID") {
-            setuserID(value);
-        }
         if (id === "email") {
             setEmail(value);
         }
         if (id === "password") {
             setPassword(value);
         }
+        if (id === "phoneNumber") {
+            setPhonenumber(value);
+        }
     }
 
     async function handleSubmit(event) {
         event.preventDefault();
-        var user_details = { userId: userID, name: name, email: email, password: password }
+        var user_details = {name: name, email: email, password: password, phoneNumber: phoneNumber }
         try {
           const response = await axios.post(API +'addUser', user_details);
           setName("");
           setEmail("");
           setPassword("");
-          setuserID("");
+          setPhonenumber("");
           alert("Registration successful, please login to access the website");
           navigate('/login');
         } catch (error) {
@@ -71,10 +69,6 @@ function Register() {
                 {guserRole}
             </div>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-                <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
-                <input type="text" min="4" className="form-control" id="userID" value={userID} onChange={(e) => handleInputChange(e)} required/>
-            </div>
             <div className="mb-3">
                 <label htmlFor="exampleInputName" className="form-label">Full Name</label>
                 <input type="text" min="4" className="form-control" id="name" value={name} onChange={(e) => handleInputChange(e)} required/>

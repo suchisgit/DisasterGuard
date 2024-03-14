@@ -51,7 +51,7 @@ function Home() {
       </div>
       <div className='row center'>
         <p>Microphone: {listening ? 'on' : 'off'}</p>
-
+        
         <button onClick={handleStartListening}>Start</button>
         <button onClick={handleStopListening}>Stop</button>
         <button onClick={resetTranscript}>Reset</button>

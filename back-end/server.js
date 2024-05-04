@@ -47,6 +47,35 @@ app.use(
       }
     })
 
+    // update user details
+    app.patch('/updateUser', async(req,res) => {
+      try{
+
+        const oldData = await User.findOne({email: req.body.email})
+        console.log(oldData);
+        const user = await User.findOneAndUpdate(
+          {_id: oldData._id} , 
+          {$set: { 
+                   "name" : req.body.name,
+                   "type" : oldData.role,
+                   "password" : req.body.password,
+                   "phoneNumber" : req.body.phoneNumber,
+                   "address" : req.body.address
+         }},
+          {new : true}
+          );
+        console.log(user);
+        if(!user){
+          res.status(404).json({ message: `cannot find any user with email ${oldData.email}` })
+        }else{
+          res.status(200).json({ message: `updated user with email ${oldData.email}` })
+        }
+      }catch(error) {
+        console.log(error)
+        res.status(500).json({ message: error.message })
+      }
+    })
+
     // to validate user name and password of user
     app.post('/user/validate', async (req, res) => {
       try {

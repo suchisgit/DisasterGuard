@@ -10,6 +10,7 @@ import { Routes, Route } from "react-router-dom";
 import { AuthContext } from './context/AuthProvider';
 import { useState } from 'react';
 import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
+import Volunteer from './Components/Volunteer';
 
 function App() {
  
@@ -30,6 +31,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/maps" element={<Googlemaps />} />
+          <Route exact path="/volunteer" element={<Volunteer />} />
         </Routes>
       </div>
     </div>

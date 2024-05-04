@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import configData from '../config.json';
-import "react-phone-input-2/lib/style.css";
+
 
 function Register() {
     const { guserRole, setguserRole } = useContext(AuthContext);

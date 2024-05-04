@@ -6,7 +6,7 @@ import configData from '../config.json';
 
 
 function Register() {
-    const { guserRole, setguserRole } = useContext(AuthContext);
+    const { role, setrole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -23,13 +23,13 @@ function Register() {
     const API = configData.API;
 
     useEffect(() => {
-        if(guserRole === 'User'){
+        if(role === 'user'){
             console.log('logged in as user');
-            navigate('/userpage');
+            navigate('/');
         }
-        else if(guserRole === 'Volunteer'){
+        else if(role === 'volunteer'){
             console.log('logged in as volunteer');
-            navigate('/volunteerpage');
+            navigate('/');
         }
     }, []);
 

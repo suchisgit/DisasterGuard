@@ -19,11 +19,11 @@ function Login() {
     useEffect(() => {
         if (guserRole == 'user') {
             console.log('logged in as user');
-            navigate('/userpage');
+            navigate('/home');
         }
         else if (guserRole == 'volunteer') {
             console.log('logged in as volunteer');
-            navigate('/volunteerpage');
+            navigate('/home');
         }
     }, [guserRole]);
 

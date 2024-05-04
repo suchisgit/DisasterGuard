@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import configData from '../config.json';
 import "react-phone-input-2/lib/style.css";
-import PhoneInput from "react-phone-input-2";
 
 
 function Register() {
@@ -84,7 +83,7 @@ function Register() {
             </div>
             <div className="mb-3">
                 <label htmlFor="exampleInputPhoneNumber" className="form-label">Phone Number</label>
-                <input type="number" min="10" className="form-control" id="phoneNumber" value={phoneNumber} onChange={(e) => handleInputChange(e)} required/>
+                <input type="number" max="11" className="form-control" id="phoneNumber" value={phoneNumber} onChange={(e) => handleInputChange(e)} required/>
             </div>
             <div className='center side'>
             <button type="submit" class="btn btn-success">Submit</button>

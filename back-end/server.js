@@ -6,42 +6,60 @@ const app = express()
 const port = 3001
 const User = require('./model/userModel')
 const cors = require("cors")
+const twilio = require("twilio")
 const Gemini_API_KEY = process.env.API_KEY;
 const {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
 } = require("@google/generative-ai");
+// const {twitterClient} = require("./twitterClient.js")
 
-// facebook start
-// const passport = require('passport');
-// const session = require('express-session');
-// const FacebookStrategy = require('passport-facebook').Strategy;
-// require('dotenv').config();
+const accountSid = process.env.TWILIO_ACCOUNT_SID
+const authToken = process.env.TWILIO_AUTH_TOKEN
+const twilioNumber = process.env.TWILIO_PHONE_NUMBER
+const client = twilio(accountSid, authToken);
 
-// app.use(session({ secret: 'your_secret_key', resave: true, saveUninitialized: true }));
-// app.use(passport.initialize());
-// app.use(passport.session());
+// twitter start
 
-// passport.use(new FacebookStrategy({
-//   clientID: process.env.FACEBOOK_APP_ID,
-//   clientSecret: process.env.FACEBOOK_APP_SECRET,
-//   callbackURL: 'http://localhost:3000/auth/facebook/callback'
-// },
-// (accessToken, refreshToken, profile, done) => {
-//   // Here you can save the accessToken to your database for the specific user
-//   return done(null, profile);
-// }));
+// *** change callback url in twitter developer profile -> http://localhost:3000/twitter/return
 
-// passport.serializeUser((user, done) => {
-//   done(null, user);
-// });
+// var passport = require('passport');
+// var Strategy = require('passport-twitter').Strategy;
+// var session = require('express-session');
 
-// passport.deserializeUser((user, done) => {
-//   done(null, user);
-// });
+// console.log(process.env.X_ACCESS_TOKEN)
+// passport.use(new Strategy({
+//   consumerKey: process.env.X_CONSUMER_API_KEY,
+//   consumerSecret: process.env.X_CONSUMER_API_SECERT,
+//   callbackURL: 'http://localhost:3000/twitter/return'
+//   }, function(token, tokenSecret, profile, callback) {
+//   const configs = createConfigs(token, tokenSecret);
+//   })
+//   );
 
-// facebook end
+// passport.serializeUser(function(user, callback) {
+//   callback(null, user);
+// })
+
+// passport.deserializeUser(function(obj, callback) {
+//   callback(null, obj);
+// })
+
+// app.use(session({secret: 'whatever', resave: true, saveUninitialized: true}))
+// app.use(passport.initialize())
+// app.use(passport.session())
+
+// app.get('/twitter/login', passport.authenticate('twitter'))
+
+// app.get('/twitter/return', passport.authenticate('twitter', {
+//     failureRedirect: '/'
+// }), function(req, res) {
+//     res.redirect('/')
+// })
+
+// twitter end
+
 app.use(
     cors({
       origin: "*",
@@ -184,7 +202,7 @@ app.use(
     })
 
     // Gemini AI API utilization to detect if it's a danger or not
-    app.get('/isDisaster', async (req,res) =>{
+    app.post('/isDisaster', async (req,res) =>{
       try{
         const MODEL_NAME = "gemini-1.0-pro";
         const genAI = new GoogleGenerativeAI(Gemini_API_KEY);
@@ -205,6 +223,35 @@ app.use(
       }catch(error){
         console.log(error)
         res.status(500).json({message: error.message})
+      }
+    })
+
+    // to post a tweet
+    // app.post('/tweet',async(req,res)=>{
+    //   try {
+    //     console.log(req.body.msg);
+    //     await twitterClient.v2.tweet(req.body.msg);
+    //     res.status(200).json({ "twitterapiresponse": "tweet successful" });
+    //   } catch (error) {
+    //     console.log(error)
+    //     res.status(500).json({message: error.message});
+    //   }
+    // })
+    
+    // send sms
+    app.post('/sms',async (req,res) => {
+      try {
+        const message = await client.messages
+        .create({
+            body: req.body.message,
+            from: twilioNumber,
+            to: req.body.emergencyNumber 
+        })
+        console.log("Message SID:",message.sid);
+        res.status(200).json({ "messagestatus": "message sent successfully" });
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message});
       }
     })
   })

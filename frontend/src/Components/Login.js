@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
+import { LoginSocialFacebook } from 'reactjs-social-login';
+import { FacebookLoginButton } from 'react-social-login-buttons'
 import configData from '../config.json';
 
 function Login() {
@@ -85,9 +87,12 @@ function Login() {
                             </div>
                         </div>
                     </div>
+
+
                 </form>
             </div>
         </div>
+        
 
     )
 }

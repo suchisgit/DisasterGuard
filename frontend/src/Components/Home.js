@@ -6,6 +6,9 @@ import './Home.css'; // Import CSS for styling
 
 function Home() {
   const [isContinuous, setIsContinuous] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+
+
   const API = configData.API;
 
   const {
@@ -19,11 +22,13 @@ function Home() {
 
   const handleStartListening = () => {
     setIsContinuous(true);
+    setIsRecording(true);
     SpeechRecognition.startListening({ continuous: true });
   };
 
   const handleStopListening = () => {
     setIsContinuous(false);
+    setIsRecording(false);
     SpeechRecognition.stopListening();
   };
 
@@ -41,14 +46,13 @@ function Home() {
           <p>Are you in danger?</p>
         </div>
         <div className="controls">
-          <div className="icon-container">
-            <FaMicrophone
-              className="icon"
-              onClick={handleStartListening}
-              style={{ fontSize: '32px', cursor: 'pointer' }}
-            />
-            <p className="control-text">Start Listening</p>
-          </div>
+        <div className={`icon-container ${isRecording ? 'active' : ''}`}>
+          <FaMicrophone
+            className="icon"
+            onClick={isRecording ? handleStopListening : handleStartListening}
+          />
+          <p className="control-text">Start Listening</p>
+        </div>
           <div className="icon-container">
             <FaStop
               className="icon"
@@ -84,5 +88,4 @@ function Home() {
     </div>
   );
 }
-
 export default Home;

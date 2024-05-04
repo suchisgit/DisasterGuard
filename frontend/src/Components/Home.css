@@ -7,7 +7,28 @@
     flex-direction: column;
     justify-content: center;
   }
-  
+
+@keyframes micSize {
+  0% {
+    transform: scale(1); 
+  }
+  50% {
+    transform: scale(1.2); 
+  }
+  100% {
+    transform: scale(1); 
+  }
+}
+
+.icon-container .icon {
+  font-size: 32px;
+}
+
+.icon-container.active .icon {
+  color: rgb(169, 18, 18);
+  animation: micSize 0.6s infinite; /* Apply the animation */
+}
+
   .header {
     text-align: center;
     margin-bottom: 20px;

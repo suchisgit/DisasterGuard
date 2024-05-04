@@ -116,7 +116,14 @@ app.use(
         const genAI = new GoogleGenerativeAI(Gemini_API_KEY);
         const usersInput = req.body.voiceToTextData
         const model = genAI.getGenerativeModel({ model: MODEL_NAME});
-        const prompt = "Strictly give me a one word answer which should be either yes or no, based on the given voice recording data of the person do you think the person is in an emergency situation, here is the voice recording data :" + usersInput + "?"
+        const previousPrompt = `Strictly give me a one word answer which should be either yes or no, 
+        based on the given voice recording data of the person do you think the person is in an 
+        emergency situation, here is the voice recording data :` + usersInput + "?";
+        const prompt = `Strictly give me a one word answer which should be either 
+        1 or 2 or 3,based on the given voice recording data of the person 
+        do you think the person is in an emergency situation related to a natural disaster, 1 
+        being the least or no emergency 3 being the highest emergency, 
+        here is the voice recording data :` + usersInput + "?";
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text_output = response.text();
@@ -125,6 +132,5 @@ app.use(
         console.log(error)
         res.status(500).json({message: error.message})
       }
-
     })
   })

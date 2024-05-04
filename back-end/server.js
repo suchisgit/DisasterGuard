@@ -13,7 +13,35 @@ const {
   HarmBlockThreshold,
 } = require("@google/generative-ai");
 
+// facebook start
+// const passport = require('passport');
+// const session = require('express-session');
+// const FacebookStrategy = require('passport-facebook').Strategy;
+// require('dotenv').config();
 
+// app.use(session({ secret: 'your_secret_key', resave: true, saveUninitialized: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// passport.use(new FacebookStrategy({
+//   clientID: process.env.FACEBOOK_APP_ID,
+//   clientSecret: process.env.FACEBOOK_APP_SECRET,
+//   callbackURL: 'http://localhost:3000/auth/facebook/callback'
+// },
+// (accessToken, refreshToken, profile, done) => {
+//   // Here you can save the accessToken to your database for the specific user
+//   return done(null, profile);
+// }));
+
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+// });
+
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
+
+// facebook end
 app.use(
     cors({
       origin: "*",
@@ -40,6 +68,22 @@ app.use(
         console.log("here")
         console.log(req.body)
         const user = await User.create(req.body)
+        res.status(200).json(JSON.stringify(user))
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error.message })
+      }
+    })
+
+
+    // to get user based on email
+    app.get('/user/:email', async(req,res) => {
+      try {
+        const {email} = req.params
+        const user = await User.findOne({ email: email })
+        if (!user) {
+          res.status(404).json({ message: 'User not found' });
+        }
         res.status(200).json(user)
       } catch (error) {
         console.log(error)
@@ -50,7 +94,6 @@ app.use(
     // update user details
     app.patch('/updateUser', async(req,res) => {
       try{
-
         const oldData = await User.findOne({email: req.body.email})
         console.log(oldData);
         const user = await User.findOneAndUpdate(
@@ -96,6 +139,8 @@ app.use(
         res.status(500).json({ message: error.message })
       }
     })
+
+    
 
     // make user as volunteer 
     app.patch('/user/updateUserMembership/', async (req, res) => {

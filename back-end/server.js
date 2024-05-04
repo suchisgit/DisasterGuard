@@ -5,8 +5,10 @@ const mongoose = require('mongoose');
 const app = express()
 const port = 3001
 const User = require('./model/userModel')
+const DisasterIncident = require('./model/disasterIncidentModel')
 const cors = require("cors")
 const twilio = require("twilio")
+const axios = require('axios')
 const Gemini_API_KEY = process.env.API_KEY;
 const {
   GoogleGenerativeAI,
@@ -14,6 +16,8 @@ const {
   HarmBlockThreshold,
 } = require("@google/generative-ai");
 // const {twitterClient} = require("./twitterClient.js")
+
+const API = "http://localhost:3001/"
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
@@ -121,7 +125,9 @@ app.use(
                    "type" : oldData.role,
                    "password" : req.body.password,
                    "phoneNumber" : req.body.phoneNumber,
-                   "address" : req.body.address
+                   "address" : req.body.address,
+                   "latitude" : req.body.latitude,
+                   "longitude" : req.body.longitude
          }},
           {new : true}
           );
@@ -201,12 +207,27 @@ app.use(
       }
     })
 
+    // add user 
+    app.post('/addIncident', async (req, res) => {
+      try {
+        console.log(req.body)
+        const disasterLocation = await DisasterIncident.create(req.body)
+        res.status(200).json(JSON.stringify(disasterLocation))
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error.message })
+      }
+    })
+
     // Gemini AI API utilization to detect if it's a danger or not
     app.post('/isDisaster', async (req,res) =>{
       try{
         const MODEL_NAME = "gemini-1.0-pro";
         const genAI = new GoogleGenerativeAI(Gemini_API_KEY);
         const usersInput = req.body.voiceToTextData
+        const userEmail = req.body.email
+        const userCurrentLongitude = req.body.longitude
+        const userCuurentLatitude = req.body.latitude
         const model = genAI.getGenerativeModel({ model: MODEL_NAME});
         const previousPrompt = `Strictly give me a one word answer which should be either yes or no, 
         based on the given voice recording data of the person do you think the person is in an 
@@ -219,6 +240,33 @@ app.use(
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text_output = response.text();
+        if (text_output == "2" || text_output == "3" ){
+          console.log("TWO OR THREE")
+          if (userEmail.trim() !== ''){
+            console.log("EMAIL EXIST")
+              const oldData = await User.findOne({email: userEmail})
+              // updating current users location in the DB
+              const updateLocation = await User.findOneAndUpdate(
+                {_id : oldData._id},
+                { $set: {
+                    "latitude" : userCuurentLatitude,
+                    "longitude" : userCurrentLongitude
+                }},
+                {new : true}
+              )
+              console.log("updated Location");
+          }
+          addIncidentReqBody = { "voicemessage" : usersInput , "latitude" : userCuurentLatitude, "longitude" : userCurrentLongitude }
+          const reportIncident = await axios.post(API + 'addIncident', addIncidentReqBody)
+          console.log("report Incident")
+
+          // if 3 -> post on social media and send message to emergency contact
+          if (text_output == "3"){
+            console.log("THREE")
+            // messageBody = { message = ""}
+            // axios.post('/sms',)
+          }
+        }
         res.status(200).json({ responseFromAIModel: text_output });
       }catch(error){
         console.log(error)
@@ -226,7 +274,10 @@ app.use(
       }
     })
 
-    // to post a tweet
+
+    
+
+    // to post a tweet uncomment later ( need to resolve issue)
     // app.post('/tweet',async(req,res)=>{
     //   try {
     //     console.log(req.body.msg);

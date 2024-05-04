@@ -43,6 +43,12 @@ function Header() {
                                     <Link className="nav-link" to="/freetrials">Interactive Maps</Link>
                                 </li>
                                 <li className="nav-item">
+                                    <Link className="nav-link" to="/updateuser">Update Profile</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/freetrials">Interactive Maps</Link>
+                                </li>
+                                <li className="nav-item">
                                     <Link className="nav-link" to="/freetrials">Social Media</Link>
                                 </li>
                                 <li className="nav-item">

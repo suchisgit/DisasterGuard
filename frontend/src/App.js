@@ -7,6 +7,7 @@ import Home from './Components/Home';
 import Googlemaps from './Components/Googlemaps'
 import Dashboard from './Components/Dashboard';
 import Updateuser from './Components/Updateuser';
+import Updateuser from './Components/Updateuser';
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from './context/AuthProvider';
 import { useState } from 'react';
@@ -36,6 +37,7 @@ function App() {
           <Route exact path="/volunteer" element={<Volunteer />} />
           <Route exact path="/updateuser" element={<Updateuser />} />
           <Route exact path="/supportmaterial" element={< SupportMaterial/>} />
+          <Route exact path="/updateuser" element={<Updateuser />} />
         </Routes>
       </div>
     </div>

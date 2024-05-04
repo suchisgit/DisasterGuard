@@ -7,7 +7,6 @@ import Home from './Components/Home';
 import Googlemaps from './Components/Googlemaps'
 import Dashboard from './Components/Dashboard';
 import Updateuser from './Components/Updateuser';
-import Updateuser from './Components/Updateuser';
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from './context/AuthProvider';
 import { useState } from 'react';

@@ -44,3 +44,12 @@
   width: 200px;
   height: 15px;  
 }
+
+.full_width_height {
+  position: absolute;
+  top: 48px; /* Leave 48px for navbar */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 48px);
+}
+

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import configData from '../config.json';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 function Home() {
-  const [membershipPlans, setMembershipPlans] = useState({});
+  
   const [isContinuous, setIsContinuous] = useState(false);
   const API = configData.API;
 
@@ -15,18 +15,10 @@ function Home() {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
-  async function getMembership() {
-    try {
-      const response = await axios.get(API + 'membershipPlan');
-      setMembershipPlans(response.data);
-      console.log(membershipPlans);
-    } catch (error) {
-      console.error('Error fetching data', error.response.data);
-    }
-  }
+  
 
   useEffect(() => {
-    getMembership();
+   
   }, []);
 
   const handleStartListening = () => {

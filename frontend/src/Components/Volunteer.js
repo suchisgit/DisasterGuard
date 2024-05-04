@@ -9,7 +9,7 @@ const Volunteer = () => {
   const [isVolunteer, setIsVolunteer] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  const { guserRole, updateUserRole } = useContext(AuthContext);
+  const { role, updateRole } = useContext(AuthContext);
   const { guserEmail } = useContext(AuthContext);
 
   useEffect(() => {
@@ -43,11 +43,12 @@ const Volunteer = () => {
         if (!response.ok) {
           throw new Error('Failed to update user record');
         }
-
+        updateRole('volunteer');
         window.alert('Registration successful as Volunteer!');
-        updateUserRole('Volunteer');
+       
         // Redirect to home page
         window.location.href = '/';
+        
       } catch (error) {
         console.error('Error updating user record:', error.message);
         throw error;

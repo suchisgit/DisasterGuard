@@ -6,14 +6,14 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [guserID, setguserID] = useState('');
-  const [guserRole, setguserRole] = useState('');
+  const [role, setrole] = useState('');
   const [guserName, setguserName] = useState('');
   const [guserEmail, setguserEmail] = useState('');
   const [guserPassword, setguserPassword] = useState('');
   const [guserPhonenumber, setguserPhonenumber] = useState('');
 
   return (
-    <AuthContext.Provider value={{ guserID, setguserID, guserRole, setguserRole, guserEmail, setguserEmail, guserName, 
+    <AuthContext.Provider value={{ guserID, setguserID, role, setrole, guserEmail, setguserEmail, guserName, 
     setguserName, guserPassword, setguserPassword, guserPhonenumber, setguserPhonenumber }}>
       {children}
     </AuthContext.Provider>

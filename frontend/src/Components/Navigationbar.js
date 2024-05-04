@@ -23,9 +23,7 @@ function Header() {
                 <div className="collapse navbar-collapse " id="navbarNav">
                     <ul className="navbar-nav ms-auto">
                         {role == '' ? <React.Fragment>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/volunteer">volunteer</Link>
-                            </li>
+                            
                             <li className="nav-item">
                                 <Link className="nav-link" to="/register">Register</Link>
                             </li>
@@ -35,6 +33,9 @@ function Header() {
                         </React.Fragment>
                             :
                             (role == 'user' ? <React.Fragment>
+                                <li className="nav-item">
+                                <Link className="nav-link" to="/volunteer">volunteer</Link>
+                                </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/updateuser">Update Profile</Link>
                                 </li>
@@ -47,15 +48,22 @@ function Header() {
                                 <li className="nav-item">
                                     <Link className="nav-link" onClick={logout}>Logout</Link>
                                 </li>
-                            </React.Fragment> : (role == 'Volunteer' ?
+                            </React.Fragment> : (role == 'volunteer' ?
                                 <React.Fragment>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/schedule" >Important Info</Link>
+                                        <Link className="nav-link" to="/supportmaterial" >Support Material</Link>
                                     </li>
-                                </React.Fragment> :
+                                    <li className="nav-item">
+                                    <Link className="nav-link" to="/freetrials">Interactive Maps</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/freetrials">Social Media</Link>
+                                </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" onClick={logout}>Logout</Link>
                                 </li>
+                                </React.Fragment> :''
+                                
                             )
                             )}
                     </ul>

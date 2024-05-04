@@ -21,7 +21,7 @@ function Login() {
             console.log('logged in as user');
             navigate('/');
         }
-        else if (role == 'Volunteer') {
+        else if (role == 'volunteer') {
             console.log('logged in as volunteer');
             navigate('/');
         }
@@ -50,11 +50,11 @@ function Login() {
             setguserPhonenumber(response.data.phoneNumber);
             if (role == 'user') {
                 console.log('logged in as user');
-                navigate('/userpage');
+                navigate('/');
             }
-            else if (role == 'Volunteer') {
-                console.log('logged in as volunteer');
-                navigate('/volunteerpage');
+            else if (role == 'volunteer') {
+                console.log('logged in as volunteerqwxws');
+                navigate('/');
             }
         } catch (error) {
             alert("Incorrect Email or Password");

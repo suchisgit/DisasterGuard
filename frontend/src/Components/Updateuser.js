@@ -106,7 +106,7 @@ function Activity() {
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">Password:</label>
                 <input
-                  type="password"
+                  type="text"
                   name="password"
                   value={userDetails.password}
                   onChange={handleInputChange}

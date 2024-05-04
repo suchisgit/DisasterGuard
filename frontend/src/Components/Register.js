@@ -9,8 +9,8 @@ function Register() {
     const { guserRole, setguserRole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
-    const { guserphonenumber, setguserPhonenumber } = useContext(AuthContext);
     const navigate = useNavigate();
+
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');

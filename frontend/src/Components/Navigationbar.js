@@ -4,12 +4,12 @@ import { AuthContext } from '../context/AuthProvider';
 
 function Header() {
     const { guserID, setguserID } = useContext(AuthContext);
-    const { guserRole, setguserRole } = useContext(AuthContext);
+    const { role, setrole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
     const logout = () => {
         setguserID('');
-        setguserRole('');
+        setrole('');
         setguserEmail('');
         setguserName('');
     }
@@ -22,7 +22,7 @@ function Header() {
                 </button>
                 <div className="collapse navbar-collapse " id="navbarNav">
                     <ul className="navbar-nav ms-auto">
-                        {guserID == '' ? <React.Fragment>
+                        {role == '' ? <React.Fragment>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/volunteer">volunteer</Link>
                             </li>
@@ -34,45 +34,23 @@ function Header() {
                             </li>                          
                         </React.Fragment>
                             :
-                            (guserRole == 'admin' ? <React.Fragment>
+                            (role == 'user' ? <React.Fragment>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/enrollusers">Enroll users</Link>
+                                    <Link className="nav-link" to="/updateuser">Update Profile</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/checkinout">Check in</Link>
+                                    <Link className="nav-link" to="/freetrials">Interactive Maps</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/freetrials">Free trials</Link>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <Link class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Analytics dashboards
-                                    </Link>
-                                    <ul class="dropdown-menu">
-                                        <li><Link class="dropdown-item" to="/dashboard">Class enrollments</Link></li>
-                                        <li><Link class="dropdown-item" to="/hoursspent">Hours spent</Link></li>
-                                        <li><Link class="dropdown-item" to="/noofvisitors">Number of visitors</Link></li>
-                                    </ul>
+                                    <Link className="nav-link" to="/freetrials">Social Media</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" onClick={logout}>Logout</Link>
                                 </li>
-                            </React.Fragment> : (guserRole == 'Member' ?
+                            </React.Fragment> : (role == 'Volunteer' ?
                                 <React.Fragment>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/schedule" >My classes</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/activity">View activites</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/signupforclass">Book class</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/loghours">Log hours</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" onClick={logout}>Logout</Link>
+                                        <Link className="nav-link" to="/schedule" >Important Info</Link>
                                     </li>
                                 </React.Fragment> :
                                 <li className="nav-item">

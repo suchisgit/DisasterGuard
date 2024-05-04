@@ -6,6 +6,7 @@ import Login from './Components/Login';
 import Home from './Components/Home';
 import Googlemaps from './Components/Googlemaps'
 import Dashboard from './Components/Dashboard';
+import Updateuser from './Components/Updateuser';
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from './context/AuthProvider';
 import { useState } from 'react';
@@ -15,12 +16,12 @@ import Volunteer from './Components/Volunteer';
 function App() {
  
   const [guserID, setguserID] = useState('');
-  const [guserRole, setguserRole] = useState('');
+  const [role, setrole] = useState('');
   const [guserEmail, setguserEmail] = useState('');
   const [guserName, setguserName] = useState('');
 
   return (
-    <AuthContext.Provider value={{guserID, setguserID,guserRole, setguserRole,guserEmail, setguserEmail,guserName, setguserName}}>
+    <AuthContext.Provider value={{guserID, setguserID,role, setrole,guserEmail, setguserEmail,guserName, setguserName}}>
     <div className="App">
       <Navigationbar>
       </Navigationbar>
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/maps" element={<Googlemaps />} />
           <Route exact path="/volunteer" element={<Volunteer />} />
+          <Route exact path="/updateuser" element={<Updateuser />} />
         </Routes>
       </div>
     </div>

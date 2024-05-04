@@ -6,26 +6,26 @@ import configData from '../config.json';
 
 function Login() {
     // const { guserID, setguserID } = useContext(AuthContext);
-    const { guserRole, setguserRole } = useContext(AuthContext);
+    const { role, setrole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
-
-
+    const [guserPassword, setguserPassword] = useState(AuthContext);
+    const [guserPhonenumber, setguserPhonenumber] = useState(AuthContext);
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [email, setemail] = useState('');
     const API = configData.API;
 
     useEffect(() => {
-        if (guserRole == 'user') {
+        if (role == 'user') {
             console.log('logged in as user');
             navigate('/');
         }
-        else if (guserRole == 'volunteer') {
+        else if (role == 'Volunteer') {
             console.log('logged in as volunteer');
             navigate('/');
         }
-    }, [guserRole]);
+    }, [role]);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -43,14 +43,16 @@ function Login() {
         try {
             const response = await axios.post(API +'user/validate', user_details);
             console.log('login successful!', response.data);
-            setguserRole(response.data.role);
+            setrole(response.data.role);
             setguserEmail(response.data.email);
             setguserName(response.data.name);
-            if (guserRole == 'User') {
+            setguserPassword(response.data.password);
+            setguserPhonenumber(response.data.phoneNumber);
+            if (role == 'user') {
                 console.log('logged in as user');
                 navigate('/userpage');
             }
-            else if (guserRole == 'Volunteer') {
+            else if (role == 'Volunteer') {
                 console.log('logged in as volunteer');
                 navigate('/volunteerpage');
             }

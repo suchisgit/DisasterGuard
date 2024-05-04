@@ -6,6 +6,7 @@ import configData from '../config.json';
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
 
+
 function Register() {
     const { guserRole, setguserRole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
@@ -80,6 +81,10 @@ function Register() {
             <div className="mb-3">
                 <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                 <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} required/>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="exampleInputPhoneNumber" className="form-label">Phone Number</label>
+                <input type="number" min="10" className="form-control" id="phoneNumber" value={phoneNumber} onChange={(e) => handleInputChange(e)} required/>
             </div>
             <div className='center side'>
             <button type="submit" class="btn btn-success">Submit</button>

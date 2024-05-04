@@ -9,7 +9,9 @@ const userSchema = mongoose.Schema(
         phoneNumber : { type : String, minlength : 10, maxlength : 13},
         address : { type : String},
         latitude : {type : String},
-        longitude : {type : String} 
+        longitude : {type : String},
+        emergencyName : { type : String, require : true},
+        emergencyPhoneNumber : { type : String, minlength : 10, maxlength : 13},
     },
     {
         timestamps : true

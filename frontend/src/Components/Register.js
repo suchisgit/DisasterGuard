@@ -13,12 +13,15 @@ function Register() {
 
 
     const [name, setName] = useState('');
+    const [emergencyName, setEmergencyName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [emergencyPhoneNumber, setEmergencyPhoneNumber] = useState('');
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState('');
+    const [emergencyPhoneNumberError, setEmergencyPhoneNumberError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const API = configData.API;
 
@@ -48,6 +51,11 @@ function Register() {
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
+        
+
+        if (id === "emergencyName") {
+            setEmergencyName(value);
+        }
         if (id === "name") {
             setName(value);
         }
@@ -74,6 +82,17 @@ function Register() {
                 }
             }
         }
+        if (id === "emergencyPhoneNumber") {
+            // Validate phone number
+            if (/^\d{0,10}$/.test(value)) {
+                setEmergencyPhoneNumber(value);
+                if (value.length !== 10) {
+                    setEmergencyPhoneNumberError('Phone number must be 10 digits');
+                } else {
+                    setEmergencyPhoneNumberError('');
+                }
+            }
+        }
     }
 
     async function handleSubmit(event) {
@@ -85,7 +104,9 @@ function Register() {
             password: password,
             phoneNumber: phoneNumber,
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            emergencyName: emergencyName,
+            emergencyPhoneNumber: emergencyPhoneNumber
         }
         try {
             const response = await axios.post(API +'addUser', user_details);
@@ -93,6 +114,8 @@ function Register() {
             setEmail("");
             setPassword("");
             setPhoneNumber("");
+            setEmergencyName("");
+            setEmergencyPhoneNumber("");
             alert("Registration successful, please login to access the website");
             navigate('/login');
         } catch (error) {
@@ -122,6 +145,17 @@ function Register() {
                         <input type="text" className="form-control" id="phoneNumber" value={phoneNumber} onChange={(e) => handleInputChange(e)} required/>
                         {phoneNumberError && <div className="text-danger">{phoneNumberError}</div>}
                     </div>
+
+                    <div className="mb-3">
+                        <label htmlFor="exampleEmergencyName" className="form-label">Emergency Contact Name</label>
+                        <input type="text" min="4" className="form-control" id="emergencyName" value={emergencyName} onChange={(e) => handleInputChange(e)} required/>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleEmergencyPhoneNumber" className="form-label">Emergency Conatct Phone Number</label>
+                        <input type="text" className="form-control" id="emergencyPhoneNumber" value={emergencyPhoneNumber} onChange={(e) => handleInputChange(e)} required/>
+                        {emergencyPhoneNumberError && <div className="text-danger">{emergencyPhoneNumberError}</div>}
+                    </div>
+                    
                     <div className='center side'>
                         <button type="submit" className="btn btn-success">Submit</button>
                     </div>

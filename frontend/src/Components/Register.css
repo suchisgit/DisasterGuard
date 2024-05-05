@@ -12,6 +12,7 @@
     background-size: 100% auto;
     background-repeat: no-repeat; /* Prevent background from repeating */
     background-position: center; 
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .icon{
     font-size: 0.8em; /* Adjust the size as needed */

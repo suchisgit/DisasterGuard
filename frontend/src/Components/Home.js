@@ -62,11 +62,9 @@ function Home() {
       // Handle form submission, e.g., send data to backend
       try {
         const response = await axios.post(API +'isDisaster', user_details);
-          
-
         if (response.status === 200) {
           window.alert('Successfully sent the message');
-          resetTranscript(); // Reset transcript after sending the message
+          resetTranscript();
         } else {
           throw new Error('Failed to send the message');
         }
@@ -120,12 +118,13 @@ function Home() {
               <p className="control-text">Reset Transcript</p>
             </div>
             <div className="icon-container">
-              <FaPaperPlane
-                className="icon"
-                onClick={handleSendMessage}
-              />
-              <p className="control-text">Send Message</p>
-            </div>
+  <FaPaperPlane
+    className={`icon ${transcript.trim() === '' ? 'disabled' : ''}`}
+    onClick={handleSendMessage}
+    disabled={transcript.trim() === ''}
+  />
+  <p className="control-text">Send Message</p>
+</div>
           </div>
         </div>
         <div className="transcript">

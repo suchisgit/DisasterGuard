@@ -8,6 +8,10 @@
     justify-content: center;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
+  .disabled {
+    opacity: 0.5; /* Reduce opacity to indicate disabled state */
+    pointer-events: none; /* Disable pointer events */
+  }
   
   /* .background-slide {
     width: 100vw; 

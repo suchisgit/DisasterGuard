@@ -13,8 +13,8 @@
     background-repeat: no-repeat; /* Prevent background from repeating */
     background-position: center; 
 }
-.icon {
-    font-size: 1rem; /* Adjust the size as needed */
+.icon{
+    font-size: 0.8em; /* Adjust the size as needed */
     margin-right: 0.5rem; /* Add spacing between the icon and input field */
 }
 

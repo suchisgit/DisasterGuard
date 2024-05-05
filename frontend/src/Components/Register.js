@@ -108,19 +108,19 @@ function Register() {
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <div className="input-group">
-                                        <span className="input-group-text icon"><FaUser /></span>
+                                        <span className="input-group-text icon smaller-icon"><FaUser /></span>
                                         <input type="text" id="name" value={name} onChange={handleInputChange} className="form-control input" placeholder="Full Name" required />
                                     </div>
                                 </div>
                                 <div className="mb-3">
                                     <div className="input-group">
-                                        <span className="input-group-text icon"><FaEnvelope /></span>
+                                        <span className="input-group-text icon smaller-icon"><FaEnvelope /></span>
                                         <input type="email" id="email" value={email} onChange={handleInputChange} className="form-control input" placeholder="Email address" required />
                                     </div>
                                 </div>
                                 <div className="mb-3">
                                     <div className="input-group">
-                                        <span className="input-group-text icon"><FaLock /></span>
+                                        <span className="input-group-text icon smaller-icon"><FaLock /></span>
                                         <input type="password" id="password" value={password} onChange={handleInputChange} className="form-control input" placeholder="Password" required />
                                     </div>
                                     {passwordError && <div className="text-danger">{passwordError}</div>}

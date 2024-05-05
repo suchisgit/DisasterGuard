@@ -8,6 +8,35 @@
     justify-content: center;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .statistics {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 80px;
+    gap: 60px;
+    transition: all 0.5s;
+  }
+  
+  .statistic {
+    text-align: center;
+  }
+  
+  .statistic h3 {
+    font-size:80px;
+    color: white;
+    margin: 0;
+  }
+  
+  .statistic p {
+    font-size: 27px;
+    color: white;
+    margin: 0;
+  }
   .disabled {
     opacity: 0.5; /* Reduce opacity to indicate disabled state */
     pointer-events: none; /* Disable pointer events */

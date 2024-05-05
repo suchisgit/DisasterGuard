@@ -8,6 +8,21 @@ import './Home.css';
 import Slider from 'react-slick';
 import { AuthContext } from '../context/AuthProvider';
 
+const Statistics = ({ incidentsReported, volunteersSignedUp }) => {
+  return (
+    <div className="statistics">
+      <div className="statistic">
+        <h3>{incidentsReported}</h3>
+        <p>INCIDENTS REPORTED</p>
+      </div>
+      <div className="statistic">
+        <h3>{volunteersSignedUp}</h3>
+        <p>REGISTERED VOLUNTEERS </p>
+      </div>
+    </div>
+  );
+};
+
 function Home() {
   const [isContinuous, setIsContinuous] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -15,6 +30,8 @@ function Home() {
   const { guserEmail, setguserEmail } = useContext(AuthContext);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+  const [incidentsReported, setIncidentsReported] = useState(0);
+  const [volunteersSignedUp, setVolunteersSignedUp] = useState(0);
   const API = configData.API;
   const navigate = useNavigate();
   
@@ -29,14 +46,33 @@ function Home() {
 
   useEffect(() => { 
     navigator.geolocation.getCurrentPosition(
-    (position) => {
+      (position) => {
         setLatitude(position.coords.latitude);
         setLongitude(position.coords.longitude);
-    },
-    (error) => {
+      },
+      (error) => {
         console.error('Error getting geolocation:', error.message);
-    }
-);}, []);
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    // Fetch statistics
+    const fetchStatistics = async () => {
+      try {
+        const response = await axios.get(API + 'statistics');
+        setIncidentsReported(response.data.incidentsReported);
+        // Simulate transition effect by delaying the update of volunteersSignedUp
+        setTimeout(() => {
+          setVolunteersSignedUp(response.data.volunteersSignedUp);
+        }, 100); // Adjust delay as needed
+      } catch (error) {
+        console.error('Error fetching statistics:', error.message);
+      }
+    };
+    fetchStatistics();
+  }, []);
+
 
   const handleStartListening = () => {
     setIsContinuous(true);
@@ -119,9 +155,9 @@ function Home() {
             </div>
             <div className="icon-container">
   <FaPaperPlane
-    className={`icon ${transcript.trim() === '' ? 'disabled' : ''}`}
+    className={`icon ${transcript.trim() === '' || isRecording ? 'disabled' : ''}`}
     onClick={handleSendMessage}
-    disabled={transcript.trim() === ''}
+    disabled={transcript.trim() === '' || isRecording}
   />
   <p className="control-text">Send Message</p>
 </div>
@@ -133,6 +169,7 @@ function Home() {
           </div>
           <p>{transcript}</p>
         </div>
+        <Statistics incidentsReported={incidentsReported} volunteersSignedUp={volunteersSignedUp} />
       </div>
     </div>
   );

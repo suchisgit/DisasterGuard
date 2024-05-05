@@ -34,7 +34,7 @@
   }
    .background1 {
     background-image: url(../images/disaster.jpg);
-    background-size: cover;
+    background-size: 100% auto;
     background-repeat: no-repeat; /* Prevent background from repeating */
     background-position: center; /* Center the background image */
     height: calc(100vh - 56px);

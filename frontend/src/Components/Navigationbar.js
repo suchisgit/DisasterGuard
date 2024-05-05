@@ -67,7 +67,6 @@ function Header() {
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/updateuser">Update Profile</Link>
->>>>>>> Stashed changes
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/" onClick={logout}>Logout</Link>

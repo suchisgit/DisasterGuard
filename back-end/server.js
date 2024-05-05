@@ -226,17 +226,17 @@ app.use(
         const genAI = new GoogleGenerativeAI(Gemini_API_KEY);
         const usersInput = req.body.voiceToTextData
         const userEmail = req.body.email
+        const userPhoneNumber = req.body.phoneNumber
         const userCurrentLongitude = req.body.longitude
         const userCuurentLatitude = req.body.latitude
         const model = genAI.getGenerativeModel({ model: MODEL_NAME});
         const previousPrompt = `Strictly give me a one word answer which should be either yes or no, 
         based on the given voice recording data of the person do you think the person is in an 
         emergency situation, here is the voice recording data :` + usersInput + "?";
-        const prompt = `Strictly give me a one word answer which should be either 
-        1 or 2 or 3,based on the given voice recording data of the person 
-        do you think the person is in an emergency situation related to a natural disaster, 1 
-        being the least or no emergency 3 being the highest emergency, 
-        here is the voice recording data :` + usersInput + "?";
+        const prompt = `Strictly give me a single numeric answer, either 1 or 2 or 3,based on 
+        the given voice recording data of the person. Do you think the person is in an emergency situation 
+        strictly related to a natural disaster, 1 being the least or no emergency 3 being the highest emergency.
+        Here is the voice recording data :` + usersInput + ". If the input is not related to disaster, answer it as 1";
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text_output = response.text();
@@ -256,7 +256,7 @@ app.use(
               )
               console.log("updated Location");
           }
-          addIncidentReqBody = { "voicemessage" : usersInput , "latitude" : userCuurentLatitude, "longitude" : userCurrentLongitude }
+          addIncidentReqBody = { "voicemessage" : usersInput , "userPhoneNumber" : userPhoneNumber, "latitude" : userCuurentLatitude, "longitude" : userCurrentLongitude }
           const reportIncident = await axios.post(API + 'addIncident', addIncidentReqBody)
           console.log("report Incident")
 
@@ -297,8 +297,18 @@ app.use(
       }
     })
 
+    // all incidents
+    app.get('/allIncidents', async(req,res) => {
+      try {
+        const allIncidents = await DisasterIncident.find({});
+        res.status(200).json(allIncidents)
+      } catch (error) {
+        console.log(error)
+      }
+    })
+
     // to get all the incidents from the db
-    app.get('/allIncidents', async(req,res)=>{
+    app.get('/allIncidentLocations', async(req,res)=>{
       try {
         const allIncidents = await DisasterIncident.find({});
 

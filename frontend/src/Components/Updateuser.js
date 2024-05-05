@@ -22,7 +22,7 @@ function Activity() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    console.log("hi");
+    console.log(role);
     if (role == '') {
       navigate('/');
     }

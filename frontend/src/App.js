@@ -26,7 +26,7 @@ function App() {
     <div className="App">
       <Navigationbar>
       </Navigationbar>
-      <div className='container'>
+      <div>
         <Routes>
         <Route exact path="/" element={<Home />} />
           <Route exact path="/register" element={<Register />} />

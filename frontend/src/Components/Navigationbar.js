@@ -1,4 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 
@@ -7,12 +9,15 @@ function Header() {
     const { role, setrole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
+    const navigate = useNavigate();
     const logout = () => {
         setguserID('');
         setrole('');
         setguserEmail('');
         setguserName('');
+       
     }
+    
     return (
         <nav className="navbar navbar-expand-lg bg-dark bg-body-tertiary" data-bs-theme="dark">
             <div className="container-fluid">
@@ -46,7 +51,7 @@ function Header() {
                                     <Link className="nav-link" to="/updateuser">Update Profile</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" onClick={logout}>Logout</Link>
+                                    <Link className="nav-link" to="/" onClick={logout}>Logout</Link>
                                 </li>
                             </React.Fragment> : (role == 'volunteer' ?
                                 <React.Fragment>
@@ -64,7 +69,7 @@ function Header() {
                                 </li>
                             
                                 <li className="nav-item">
-                                    <Link className="nav-link" onClick={logout}>Logout</Link>
+                                    <Link className="nav-link" to="/" onClick={logout}>Logout</Link>
                                 </li>
                                 </React.Fragment> :''
                                 

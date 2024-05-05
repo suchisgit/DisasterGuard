@@ -6,6 +6,7 @@ const app = express()
 const port = 3001
 const User = require('./model/userModel')
 const DisasterIncident = require('./model/disasterIncidentModel')
+const VolunteerSave = require('./model/volunteerSaveModel')
 const cors = require("cors")
 const twilio = require("twilio")
 const axios = require('axios')
@@ -164,8 +165,6 @@ app.use(
       }
     })
 
-    
-
     // make user as volunteer 
     app.patch('/user/updateUserMembership/', async (req, res) => {
       try {
@@ -178,6 +177,9 @@ app.use(
         }
         user.role = "volunteer"
         await user.save();
+        volunteerReqBody = { "volunteerEmail" : email , "savesCount": 0}
+        const saveVolunteer = await VolunteerSave.create(volunteerReqBody)
+        console.log(saveVolunteer)
         res.status(200).json({ success: true, message: 'User record updated & successfully made as volunteer.' })
       } catch (error) {
         console.log(error)
@@ -218,6 +220,63 @@ app.use(
         res.status(500).json({ message: error.message })
       }
     })
+
+    // volunteer save count increment
+    app.post('/saveThisPerson', async(req,res) => {
+      try {
+        console.log("brosky......")
+        const volunteerEmail = req.body.email
+        console.log({"volunteerEmail" : volunteerEmail})
+        const volunteer = await VolunteerSave.findOne({"volunteerEmail" : volunteerEmail})
+        console.log(volunteer)
+        if (volunteer){
+          volunteer.savesCount += 1;
+          await volunteer.save();
+          res.status(200).json({success : "incremented volunteer count by 1"} )
+        }else{
+          console.log("volunteer not found")
+          res.status(404).json({failed : "volunteer not found"} )
+        }
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error.message })
+      }
+    })
+
+    // to get the count of total volunteers
+    app.get('/volunteerCount', async(req,res) => {
+      try {
+        const volunteerCount = await User.countDocuments({role: "volunteer" })
+        res.status(200).json({ count : volunteerCount})
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error.message })
+      }
+    })
+
+    // total number of saves
+    app.get('/totalSavesCount', async(req,res) => {
+      try {
+        const totalSaves = await VolunteerSave.aggregate([
+          {
+              $group: {
+                  _id: null,
+                  totalSaves: { $sum: "$savesCount" }
+              }
+          }
+          ]);
+          console.log(totalSaves)
+          if (totalSaves.length > 0) {
+              res.status(200).json({ totalSavesCount: totalSaves[0].totalSaves });
+          } else {
+              res.status(200).json({ totalSavesCount: 0 });
+          }
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error.message })
+      }
+    })
+
 
     // Gemini AI API utilization to detect if it's a danger or not
     app.post('/isDisaster', async (req,res) =>{

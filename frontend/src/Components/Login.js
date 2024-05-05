@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import configData from '../config.json';
+import { FaEnvelope, FaLock} from 'react-icons/fa';
+import './login.css';
 
 function Login() {
     // const { guserID, setguserID } = useContext(AuthContext);
@@ -67,34 +69,22 @@ function Login() {
     };
 
     return (
-        <div className='row'>
-            <div className='col-6 offset-3'>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Email </label>
-                        <input type="text"  min="4" className="form-control" id="email" value={email} onChange={(e) => handleInputChange(e)} required />
-                    </div>
-
-                    <div className="mb-3">
-                        <label className="form-label">Password</label>
-                        <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} required/>
-                    </div>
-
-                    <div className="form-group">
-                        <div className="row">
-                            <div className='center side'>
-                                <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Submit</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </form>
-            </div>
+        <div className='login-container'>
+        <div className='login-card'>
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="input-group">
+                    <label htmlFor="email"><FaEnvelope /></label>
+                    <input type="text" id="email" value={email} onChange={(e) => handleInputChange(e)} placeholder="Email" required />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="password"><FaLock /></label>
+                    <input type="password" id="password" value={password} onChange={(e) => handleInputChange(e)} placeholder="Password" required />
+                </div>
+                <button type="submit" className="btn btn-primary">Login</button>
+            </form>
         </div>
-        
-
-    )
+    </div>
+);
 }
-
 export default Login;

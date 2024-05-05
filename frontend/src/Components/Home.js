@@ -91,7 +91,7 @@ function Home() {
     <div className="background-slide background1">
       <div className="container">
         <div className="header">
-          <h1>Voice Assistance</h1>
+          <h1>Immediate Assistance</h1>
         </div>
         <div className="content">
           <div className="message center">

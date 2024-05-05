@@ -21,11 +21,11 @@ function Login() {
     useEffect(() => {
         if (role == 'user') {
             console.log('logged in as user');
-            navigate('/');
+            navigate('/updateuser');
         }
         else if (role == 'volunteer') {
             console.log('logged in as volunteer');
-            navigate('/');
+            navigate('/maps');
         }
     }, [role]);
 

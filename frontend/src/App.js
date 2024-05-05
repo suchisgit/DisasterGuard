@@ -13,6 +13,7 @@ import { useState } from 'react';
 import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
 import Volunteer from './Components/Volunteer';
 import SupportMaterial from './Components/SupportMaterial';
+import Peopleindanger from './Components/SupportMaterial';
 
 function App() {
  
@@ -36,6 +37,7 @@ function App() {
           <Route exact path="/volunteer" element={<Volunteer />} />
           <Route exact path="/updateuser" element={<Updateuser />} />
           <Route exact path="/supportmaterial" element={< SupportMaterial/>} />
+          <Route exact path="/peopleindanger" element={< Peopleindanger/>} />
         </Routes>
       </div>
     </div>

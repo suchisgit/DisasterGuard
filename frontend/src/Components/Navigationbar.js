@@ -55,7 +55,10 @@ function Header() {
                                 </li>
                             </React.Fragment> : (role == 'volunteer' ?
                                 <React.Fragment>
-                                 <li className="nav-item">
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/peopleindanger">People in danger</Link>
+                                </li>
+                                <li className="nav-item">
                                     <Link className="nav-link" to="/maps">Interactive Maps</Link>
                                 </li>
                                 <li className="nav-item">

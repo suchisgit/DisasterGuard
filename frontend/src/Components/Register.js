@@ -110,19 +110,6 @@ function Register() {
         } catch (error) {
           console.error('registeration failed!', error.response.data);
         }
-        try {
-            const response = await axios.post(API +'addUser', user_details);
-            setName("");
-            setEmail("");
-            setPassword("");
-            setPhoneNumber("");
-            setEmergencyName("");
-            setEmergencyPhoneNumber("");
-            alert("Registration successful, please login to access the website");
-            navigate('/login');
-        } catch (error) {
-            console.error('Registration failed!', error.response.data);
-        }
     };
 
     return (

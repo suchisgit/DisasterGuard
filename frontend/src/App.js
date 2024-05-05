@@ -36,7 +36,6 @@ function App() {
           <Route exact path="/volunteer" element={<Volunteer />} />
           <Route exact path="/updateuser" element={<Updateuser />} />
           <Route exact path="/supportmaterial" element={< SupportMaterial/>} />
-          <Route exact path="/updateuser" element={<Updateuser />} />
         </Routes>
       </div>
     </div>

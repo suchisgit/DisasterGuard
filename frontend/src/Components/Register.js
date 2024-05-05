@@ -97,16 +97,18 @@ function Register() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        if (phoneNumberError || passwordError) return; // Don't submit if there's an error
-        var user_details = {
-            name: name,
-            email: email,
-            password: password,
-            phoneNumber: phoneNumber,
-            latitude: latitude,
-            longitude: longitude,
-            emergencyName: emergencyName,
-            emergencyPhoneNumber: emergencyPhoneNumber
+        var user_details = {name: name, email: email, password: password, phoneNumber: phoneNumber }
+        try {
+          const response = await axios.post(API +'addUser', user_details);
+          
+          setName("");
+          setEmail("");
+          setPassword("");
+          setPhonenumber("");
+          alert("Registration successful, please login to access the website");
+          navigate('/login');
+        } catch (error) {
+          console.error('registeration failed!', error.response.data);
         }
         try {
             const response = await axios.post(API +'addUser', user_details);

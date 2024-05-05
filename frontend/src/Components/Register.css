@@ -1,0 +1,25 @@
+.input-group-text {
+    border: none;
+    background-color: transparent;
+}
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 56px);
+    width: 100vw;
+    background-image: url(../images/login.jpg);
+    background-size: 100% auto;
+    background-repeat: no-repeat; /* Prevent background from repeating */
+    background-position: center; 
+}
+.icon {
+    font-size: 1rem; /* Adjust the size as needed */
+    margin-right: 0.5rem; /* Add spacing between the icon and input field */
+}
+
+.input {
+    border-radius: 0; /* Remove border radius */
+    border: none; /* Remove border */
+    box-shadow: none; /* Remove box shadow */
+}

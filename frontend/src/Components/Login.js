@@ -69,22 +69,28 @@ function Login() {
     };
 
     return (
-        <div className='login-container'>
-        <div className='login-card'>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="input-group">
-                    <label htmlFor="email"><FaEnvelope /></label>
-                    <input type="text" id="email" value={email} onChange={(e) => handleInputChange(e)} placeholder="Email" required />
+        <div className="background-slide background2">
+            <div className='login-container'>
+            <div className='login-card'>
+            <h2 className="card-title text-center mb-3">Login</h2>
+                <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <div className="input-group">
+                        <label htmlFor="email"><FaEnvelope /></label>
+                        <input type="text" id="email" value={email} onChange={(e) => handleInputChange(e)} placeholder="Email" required />
+                    </div>
                 </div>
-                <div className="input-group">
-                    <label htmlFor="password"><FaLock /></label>
-                    <input type="password" id="password" value={password} onChange={(e) => handleInputChange(e)} placeholder="Password" required />
-                </div>
-                <button type="submit" className="btn btn-primary">Login</button>
-            </form>
+                <div className="mb-3">
+                    <div className="input-group">
+                        <label htmlFor="password"><FaLock /></label>
+                        <input type="password" id="password" value={password} onChange={(e) => handleInputChange(e)} placeholder="Password" required />
+                    </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Login</button>
+                </form>
+            </div>
+            </div>
         </div>
-    </div>
-);
+    );
 }
 export default Login;

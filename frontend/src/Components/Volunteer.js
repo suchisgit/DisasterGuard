@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import configData from '../config.json';
-import './Volunteer.css'; // Import the CSS file for styling
 import { useNavigate } from "react-router-dom";
+import './Volunteer.css'; // Import the CSS file for styling
 
 const API = configData.API;
 
@@ -13,9 +13,11 @@ const Volunteer = () => {
   const { role, setrole } = useContext(AuthContext);
   const { guserEmail } = useContext(AuthContext);
   const navigate = useNavigate();
+  const style = {textAlign:'center'
+
+  }
 
   useEffect(() => {
-    // Enable submit button only when both checkboxes are checked
     setIsSubmitDisabled(!(isVolunteer && isChecked));
   }, [isVolunteer, isChecked]);
 
@@ -32,7 +34,6 @@ const Volunteer = () => {
     if (isSubmitDisabled) {
       alert('Please accept the terms and conditions and register as a volunteer before submitting.');
     } else {
-      // Handle form submission, e.g., send data to backend
       try {
         const response = await fetch(API + 'user/updateUserMembership/', {
           method: 'PATCH',
@@ -46,53 +47,59 @@ const Volunteer = () => {
           throw new Error('Failed to update user record');
         }
         setrole("volunteer");
-        console.log(role);
         window.alert('Registration successful as Volunteer!');
         navigate('/');
-       
-        
       } catch (error) {
         console.error('Error updating user record:', error.message);
         throw error;
       }
-      console.log('Form submitted!');
     }
   };
 
   return (
-    <div className="volunteer-container">
-      <h2>Volunteer Sign Up</h2>
-      <form onSubmit={handleSubmit} className="volunteer-form">
-      <div className="terms-and-conditions">
-          <TermsAndConditions />
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-12">
+          <div className="card volunteer-card">
+            <div className="card-header">
+              <h2 className="card-title" style={style}> Volunteer Sign Up</h2>
+            </div>
+            <div className="card-body">
+              <form onSubmit={handleSubmit} className="volunteer-form">
+                <div className="terms-and-conditions">
+                  <TermsAndConditions />
+                </div>
+                <div className="volunteer-checkbox form-check form-switch" >
+                  <label htmlFor="volunteerToggle"  class="form-check-label">Register as Volunteer</label>
+                  <input className='form-check-input green-switch'
+                    type="checkbox"
+                    id="volunteerToggle"
+                    checked={isVolunteer}
+                    onChange={handleToggleChange}
+                  />
+                </div>
+                <div className="volunteer-checkbox form-check form-switch">
+                  <label htmlFor="termsCheckbox" class="form-check-label">I accept the Terms and Conditions</label>
+                  <input className='form-check-input green-switch'
+                    type="checkbox"
+                    id="termsCheckbox"
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
+                <button type="submit" disabled={isSubmitDisabled} className="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div className="volunteer-checkbox">
-          <label htmlFor="volunteerToggle">Register as Volunteer:</label>
-          <input
-            type="checkbox"
-            id="volunteerToggle"
-            checked={isVolunteer}
-            onChange={handleToggleChange}
-          />
-        </div>
-        <div className="volunteer-checkbox">
-          <label htmlFor="termsCheckbox">I accept the Terms and Conditions:</label>
-          <input
-            type="checkbox"
-            id="termsCheckbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-          />
-        </div>
-        
-        <button type="submit" disabled={isSubmitDisabled} className="volunteer-button">Submit</button>
-      </form>
+      </div>
     </div>
   );
 };
 
+
 const TermsAndConditions = () => (
-  <div>
+  <div className="terms-and-conditions">
     <h3>Terms and Conditions</h3>
     <p>
       These terms and conditions ("Terms") govern your use of our application ("the Application")

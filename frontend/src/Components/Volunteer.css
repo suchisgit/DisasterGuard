@@ -12,10 +12,13 @@
   
   .volunteer-checkbox {
     margin-bottom: 10px;
+    
   }
   
   .volunteer-checkbox label {
     margin-right: 10px;
+   
+  
   }
   
   .volunteer-button {
@@ -34,5 +37,57 @@
   
   .terms-and-conditions p {
     margin-bottom: 10px;
+    font-size: 13px;
   }
   
+  .volunteer-card {
+    max-width: 700px; /* Decrease the size of the card */
+  }
+  
+  .terms-and-conditions {
+    text-align: justify; /* Align the Terms and Conditions text */
+  }
+  .btn-primary {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 28px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.btn-primary:disabled {
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+    transition: background-color 0.3s ease; 
+}
+.green-switch:checked  {
+  background-color: green !important; /* Change background color to green */
+  border-color: green !important;
+  transition: background-color 0.3s ease;  /* Change border color to green */
+}
+.green-switch::before {
+  background-color: white !important; /* Change background color to green */
+  border-color: green !important;
+  transition: background-color 0.3s ease;  /* Change border color to green */
+
+}
+.green-switch:not(:checked)  {
+  background-color: white !important; /* Change background color to green */
+  border-color: green !important;
+  transition: background-color 0.3s ease;  /* Change border color to green */
+}
+.form-switch .form-check-input:focus {
+background-color  :green !important;
+box-shadow: 0px 0px rgb(215, 238, 215) !important;}

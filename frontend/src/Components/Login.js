@@ -52,15 +52,11 @@ function Login() {
                 console.log('logged in as user');
                 navigate('/');
             }
-<<<<<<< Updated upstream
+
             else if (role == 'volunteer') {
-                console.log('logged in as volunteerqwxws');
-                navigate('/');
-=======
-            else if (role == 'Volunteer') {
                 console.log('logged in as volunteer');
-                navigate('/volunteerpage');
->>>>>>> Stashed changes
+                navigate('/');
+
             }
         } catch (error) {
             alert("Incorrect Email or Password");

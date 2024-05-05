@@ -39,7 +39,7 @@ function Header() {
                             :
                             (role == 'user' ? <React.Fragment>
                                  <li className="nav-item">
-                                    <Link className="nav-link" to="/freetrials">Interactive Maps</Link>
+                                    <Link className="nav-link" to="/maps">Interactive Maps</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/freetrials">Social Media</Link>
@@ -56,7 +56,7 @@ function Header() {
                             </React.Fragment> : (role == 'volunteer' ?
                                 <React.Fragment>
                                  <li className="nav-item">
-                                    <Link className="nav-link" to="/freetrials">Interactive Maps</Link>
+                                    <Link className="nav-link" to="/maps">Interactive Maps</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/freetrials">Social Media</Link>

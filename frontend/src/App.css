@@ -47,7 +47,7 @@
 
 .full_width_height {
   position: absolute;
-  top: 48px; /* Leave 48px for navbar */
+  top: 56px;
   left: 0;
   width: 100%;
   height: calc(100% - 48px);

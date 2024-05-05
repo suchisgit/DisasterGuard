@@ -15,7 +15,7 @@ const {
   HarmCategory,
   HarmBlockThreshold,
 } = require("@google/generative-ai");
-// const {twitterClient} = require("./twitterClient.js")
+const {twitterClient} = require("./twitterClient.js")
 
 const API = "http://localhost:3001/"
 
@@ -270,9 +270,21 @@ app.use(
                   "message" : "\nHello, " + oldData.emergencyName + "\n"  + oldData.name + " is in danger, they have chosen you as your emergency contact, Please help them. \n This is the location co-ordinates of the user {"+ oldData.latitude + ","+ oldData.longitude + "}. \n - Team DisasterGuard",
                   "emergencyNumber" : "+1" + oldData.emergencyPhoneNumber
                 }
+                tweetBody = {
+                  "msg" : " Note: This is just a sample tweet posted on behlaf of Disaster Guard APP. \n Person " +oldData.emergencyName +" is in danger. Need Assistance. This is the location co-ordinates of the user {"+ oldData.latitude + ","+ oldData.longitude + "}. \n - Team DisasterGuard \n #disasterGuardApplication"
+                }
                 console.log(messageBody)
-                const message = axios.post(API+ 'sms',messageBody)
-                console.log("message sent" + message)
+                // sending message
+                const message = axios.post(API+ 'sms',messageBody).then(response => {
+                  console.log("message sent"+ message)
+                  console.log(reponse.status)
+                })
+                const tweet = axios.post(API + 'tweet',tweetBody).then(response => 
+                  { 
+                    console.log("tweeted" + tweet)
+                    console.log(response.status);
+                  })
+                
             }else{
               console.log("EMAIL doesn't  EXIST log in level-3 danger")
             }
@@ -309,16 +321,16 @@ app.use(
 
 
     // to post a tweet uncomment later ( need to resolve issue)
-    // app.post('/tweet',async(req,res)=>{
-    //   try {
-    //     console.log(req.body.msg);
-    //     await twitterClient.v2.tweet(req.body.msg);
-    //     res.status(200).json({ "twitterapiresponse": "tweet successful" });
-    //   } catch (error) {
-    //     console.log(error)
-    //     res.status(500).json({message: error.message});
-    //   }
-    // })
+    app.post('/tweet',async(req,res)=>{
+      try {
+        console.log(req.body.msg);
+        const tweet = await twitterClient.v2.tweet(req.body.msg);
+        res.status(200).json({ "twitterapiresponse": "tweet successful" });
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message});
+      }
+    })
     
     // send sms
     app.post('/sms',async (req,res) => {

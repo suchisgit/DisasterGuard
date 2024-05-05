@@ -43,9 +43,6 @@ function Header() {
                                     <Link className="nav-link" to="/maps">Interactive Maps</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/">Social Media</Link>
-                                </li>
-                                <li className="nav-item">
                                     <Link className="nav-link" to="/volunteer">Volunteer Registration</Link>
                                 </li>
                                 <li className="nav-item">
@@ -71,8 +68,7 @@ function Header() {
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/" onClick={logout}>Logout</Link>
                                 </li>
-                                </React.Fragment> :''
-                                
+                                </React.Fragment> :''   
                             )
                             )}
                     </ul>

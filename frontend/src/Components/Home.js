@@ -52,24 +52,24 @@ function Home() {
 
  
   const handleSendMessage = async event => {
+    if (transcript.trim() === '') {
+      alert('Please speak something before sending the message.');
+      return;
+    }  
     setScript(transcript);
     var user_details = { email: guserEmail, latitude: latitude, longitude: longitude, voiceToTextData: transcript} 
-    console.log(user_details);
     
       // Handle form submission, e.g., send data to backend
       try {
         const response = await axios.post(API +'isDisaster', user_details);
           
 
-        if (!response.ok) {
+        if (response.status === 200) {
+          window.alert('Successfully sent the message');
+          resetTranscript(); // Reset transcript after sending the message
+        } else {
           throw new Error('Failed to send the message');
         }
-        
-        window.alert('Successfully sent the message');
-        navigate("/");
-       
-        // Redirect to home page
-        
       } catch (error) {
         console.error('Error in sending the message', error.message);
         throw error;

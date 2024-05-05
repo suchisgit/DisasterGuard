@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import configData from '../config.json';
 import './Volunteer.css'; // Import the CSS file for styling
+import { useNavigate } from "react-router-dom";
 
 const API = configData.API;
 
@@ -9,8 +10,9 @@ const Volunteer = () => {
   const [isVolunteer, setIsVolunteer] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  const { role, updateRole } = useContext(AuthContext);
+  const { role, setrole } = useContext(AuthContext);
   const { guserEmail } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Enable submit button only when both checkboxes are checked
@@ -43,11 +45,11 @@ const Volunteer = () => {
         if (!response.ok) {
           throw new Error('Failed to update user record');
         }
-        updateRole('volunteer');
+        setrole("volunteer");
+        console.log(role);
         window.alert('Registration successful as Volunteer!');
+        navigate('/');
        
-        // Redirect to home page
-        window.location.href = '/';
         
       } catch (error) {
         console.error('Error updating user record:', error.message);

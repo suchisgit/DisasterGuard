@@ -104,7 +104,7 @@ function Register() {
           setName("");
           setEmail("");
           setPassword("");
-          setPhonenumber("");
+          setPhoneNumber("");
           alert("Registration successful, please login to access the website");
           navigate('/login');
         } catch (error) {

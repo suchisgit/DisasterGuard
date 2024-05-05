@@ -263,8 +263,19 @@ app.use(
           // if 3 -> post on social media and send message to emergency contact
           if (text_output == "3"){
             console.log("THREE")
-            // messageBody = { message = ""}
-            // axios.post('/sms',)
+            if (userEmail.trim() !== ''){
+              console.log("EMAIL EXIST")
+                const oldData = await User.findOne({email: userEmail})
+                messageBody = { 
+                  "message" : "\nHello, " + oldData.emergencyName + "\n"  + oldData.name + " is in danger, they have chosen you as your emergency contact, Please help them. \n This is the location co-ordinates of the user {"+ oldData.latitude + ","+ oldData.longitude + "}. \n - Team DisasterGuard",
+                  "emergencyNumber" : "+1" + oldData.emergencyPhoneNumber
+                }
+                console.log(messageBody)
+                const message = axios.post(API+ 'sms',messageBody)
+                console.log("message sent" + message)
+            }else{
+              console.log("EMAIL doesn't  EXIST log in level-3 danger")
+            }
           }
         }
         res.status(200).json({ responseFromAIModel: text_output });
@@ -274,8 +285,28 @@ app.use(
       }
     })
 
+    // to get all the incidents from the db
+    app.get('/allIncidents', async(req,res)=>{
+      try {
+        const allIncidents = await DisasterIncident.find({});
 
-    
+        const locations = allIncidents.map( incident => {
+          if (incident.latitude && incident.longitude){
+            return {
+              latitude : incident.latitude,
+              longitude: incident.longitude
+            };
+          }
+          return null;
+        }).filter(location => location != null);
+        res.status(200).json(locations);
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+
+    })
+
 
     // to post a tweet uncomment later ( need to resolve issue)
     // app.post('/tweet',async(req,res)=>{

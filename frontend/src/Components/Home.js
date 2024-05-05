@@ -11,8 +11,6 @@ import { AuthContext } from '../context/AuthProvider';
 function Home() {
   const [isContinuous, setIsContinuous] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-
-
   const [script, setScript] = useState('');
   const { guserEmail, setguserEmail } = useContext(AuthContext);
   const [latitude, setLatitude] = useState('');
@@ -55,7 +53,7 @@ function Home() {
  
   const handleSendMessage = async event => {
     setScript(transcript);
-    var user_details = { email: guserEmail, latitude: latitude, longitude: longitude, voiceToTextData: script } 
+    var user_details = { email: guserEmail, latitude: latitude, longitude: longitude, voiceToTextData: transcript} 
     console.log(user_details);
     
       // Handle form submission, e.g., send data to backend
@@ -64,16 +62,16 @@ function Home() {
           
 
         if (!response.ok) {
-          throw new Error('Failed to update user record');
+          throw new Error('Failed to send the message');
         }
-        setScript('');
-        window.alert('Registration successful as Volunteer!');
+        
+        window.alert('Successfully sent the message');
+        navigate("/");
        
         // Redirect to home page
-        window.location.href = '/';
         
       } catch (error) {
-        console.error('Error updating user record:', error.message);
+        console.error('Error in sending the message', error.message);
         throw error;
       }
       console.log('Form submitted!');

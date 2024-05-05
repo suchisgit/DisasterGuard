@@ -43,6 +43,9 @@ function Header() {
                                     <Link className="nav-link" to="/maps">Interactive Maps</Link>
                                 </li>
                                 <li className="nav-item">
+                                    <Link className="nav-link" to="/">Social Media</Link>
+                                </li>
+                                <li className="nav-item">
                                     <Link className="nav-link" to="/volunteer">Volunteer Registration</Link>
                                 </li>
                                 <li className="nav-item">
@@ -64,6 +67,7 @@ function Header() {
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/updateuser">Update Profile</Link>
+>>>>>>> Stashed changes
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/" onClick={logout}>Logout</Link>

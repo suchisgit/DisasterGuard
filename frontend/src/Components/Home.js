@@ -7,8 +7,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import './Home.css';
 import Slider from 'react-slick';
 import { AuthContext } from '../context/AuthProvider';
-
-
+import { FaExclamationCircle, FaUser, FaHandshake } from 'react-icons/fa';
 
 const Statistics = ({ incidentsReported, peopleSaved, volunteersSignedUp }) => {
   const [animatedNumbers, setAnimatedNumbers] = useState({
@@ -20,7 +19,7 @@ const Statistics = ({ incidentsReported, peopleSaved, volunteersSignedUp }) => {
   // Animate numbers on component mount
   useEffect(() => {
     const animateNumbers = () => {
-      const animationSpeed = 4000; // Adjust animation speed as needed for a slower animation
+      const animationSpeed = 6000; // Adjust animation speed as needed for a slower animation
       const steps = 50; // Number of steps in animation
       const stepValue = {
         incidentsReported: Math.ceil(incidentsReported / steps),
@@ -38,7 +37,7 @@ const Statistics = ({ incidentsReported, peopleSaved, volunteersSignedUp }) => {
               ...prevState,
               [property]: current
             }));
-              setTimeout(increment, animationSpeed / steps);
+            setTimeout(increment, animationSpeed / steps);
           } else {
             setAnimatedNumbers(prevState => ({
               ...prevState,
@@ -61,15 +60,24 @@ const Statistics = ({ incidentsReported, peopleSaved, volunteersSignedUp }) => {
     <div className="statistics">
       <div className="statistic">
         <h3>{animatedNumbers.incidentsReported}</h3>
-        <p>INCIDENTS REPORTED</p>
+        <p>
+          <span>INCIDENTS REPORTED</span>
+          <FaExclamationCircle className="statistic-icon red" />
+        </p>
       </div>
       <div className="statistic">
         <h3>{animatedNumbers.peopleSaved}</h3>
-        <p>PEOPLE SAVED</p>
+        <p>
+          <span>PEOPLE SAVED</span>
+          <FaUser className="statistic-icon green" />
+        </p>
       </div>
       <div className="statistic">
         <h3>{animatedNumbers.volunteersSignedUp}</h3>
-        <p>VOLUNTEERS REGISTERED</p>
+        <p>
+          <span>VOLUNTEERS REGISTERED</span>
+          <FaHandshake className="statistic-icon blue" />
+        </p>
       </div>
     </div>
   );

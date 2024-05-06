@@ -13,7 +13,20 @@
     flex-direction: column;
     align-items: center;
   }
+  .statistic p span {
+    margin-right: 10px;
+  }
+  .statistic-icon.red {
+    color: red;
+  }
   
+  .statistic-icon.green {
+    color: green;
+  }
+  
+  .statistic-icon.blue {
+    color: rgb(53, 149, 184);
+  }
   .statistics {
     display: flex;
     justify-content: space-around;
@@ -33,7 +46,7 @@
   }
   
   .statistic p {
-    font-size: 27px;
+    font-size: 23px;
     color: white;
     margin: 0;
   }

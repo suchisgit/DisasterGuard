@@ -8,19 +8,67 @@ import './Home.css';
 import Slider from 'react-slick';
 import { AuthContext } from '../context/AuthProvider';
 
+
+
 const Statistics = ({ incidentsReported, peopleSaved, volunteersSignedUp }) => {
+  const [animatedNumbers, setAnimatedNumbers] = useState({
+    incidentsReported: 0,
+    peopleSaved: 0,
+    volunteersSignedUp: 0
+  });
+
+  // Animate numbers on component mount
+  useEffect(() => {
+    const animateNumbers = () => {
+      const animationSpeed = 4000; // Adjust animation speed as needed for a slower animation
+      const steps = 50; // Number of steps in animation
+      const stepValue = {
+        incidentsReported: Math.ceil(incidentsReported / steps),
+        peopleSaved: Math.ceil(peopleSaved / steps),
+        volunteersSignedUp: Math.ceil(volunteersSignedUp / steps)
+      };
+
+      // Animate each number separately
+      const animate = (target, property) => {
+        let current = 0;
+        const increment = () => {
+          if (current < target) {
+            current += stepValue[property];
+            setAnimatedNumbers(prevState => ({
+              ...prevState,
+              [property]: current
+            }));
+              setTimeout(increment, animationSpeed / steps);
+          } else {
+            setAnimatedNumbers(prevState => ({
+              ...prevState,
+              [property]: target
+            }));
+          }
+        };
+        increment();
+      };
+
+      animate(incidentsReported, 'incidentsReported');
+      animate(peopleSaved, 'peopleSaved');
+      animate(volunteersSignedUp, 'volunteersSignedUp');
+    };
+
+    animateNumbers();
+  }, [incidentsReported, peopleSaved, volunteersSignedUp]);
+
   return (
     <div className="statistics">
       <div className="statistic">
-        <h3>{incidentsReported}</h3>
+        <h3>{animatedNumbers.incidentsReported}</h3>
         <p>INCIDENTS REPORTED</p>
       </div>
       <div className="statistic">
-        <h3>{peopleSaved}</h3>
+        <h3>{animatedNumbers.peopleSaved}</h3>
         <p>PEOPLE SAVED</p>
       </div>
       <div className="statistic">
-        <h3>{volunteersSignedUp}</h3>
+        <h3>{animatedNumbers.volunteersSignedUp}</h3>
         <p>VOLUNTEERS REGISTERED</p>
       </div>
     </div>

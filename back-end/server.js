@@ -168,6 +168,7 @@ app.use(
     // make user as volunteer 
     app.patch('/user/updateUserMembership/', async (req, res) => {
       try {
+        console.log("update user")
         const email = req.body.email
         const user = await User.findOne({ email: email })
         // console.log(startDate)
@@ -285,6 +286,7 @@ app.use(
     // Gemini AI API utilization to detect if it's a danger or not
     app.post('/isDisaster', async (req,res) =>{
       try{
+        console.log("is disaster api called!")
         const MODEL_NAME = "gemini-1.0-pro";
         const genAI = new GoogleGenerativeAI(Gemini_API_KEY);
         const usersInput = req.body.voiceToTextData
@@ -293,6 +295,7 @@ app.use(
         const userCurrentLongitude = req.body.longitude
         const userCuurentLatitude = req.body.latitude
         const model = genAI.getGenerativeModel({ model: MODEL_NAME});
+        console.log(req.body)
         const previousPrompt = `Strictly give me a one word answer which should be either yes or no, 
         based on the given voice recording data of the person do you think the person is in an 
         emergency situation, here is the voice recording data :` + usersInput + "?";
@@ -303,6 +306,7 @@ app.use(
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text_output = response.text();
+        console.log(text_output)
         if (text_output == "2" || text_output == "3" ){
           console.log("TWO OR THREE")
           if (userEmail.trim() !== ''){
@@ -319,6 +323,7 @@ app.use(
               )
               console.log("updated Location");
           }
+          console.log("Incidet.....")
           addIncidentReqBody = { "voicemessage" : usersInput , "userPhoneNumber" : userPhoneNumber, "latitude" : userCuurentLatitude, "longitude" : userCurrentLongitude }
           const reportIncident = await axios.post(API + 'addIncident', addIncidentReqBody)
           console.log("report Incident")
@@ -341,13 +346,16 @@ app.use(
                 const message = axios.post(API+ 'sms',messageBody).then(response => {
                   console.log("message sent"+ message)
                   console.log(reponse.status)
-                })
+                }).catch(error => {
+                  console.log("Error sending message:", error)
+                });
                 const tweet = axios.post(API + 'tweet',tweetBody).then(response => 
                   { 
                     console.log("tweeted" + tweet)
                     console.log(response.status);
-                  })
-                
+                  }).catch(error => {
+                    console.error("Error tweeting:", error);
+                  });
             }else{
               console.log("EMAIL doesn't  EXIST log in level-3 danger")
             }
@@ -414,7 +422,6 @@ app.use(
         console.log(error)
         res.status(500).json({message: error.message})
       }
-
     })
 
 

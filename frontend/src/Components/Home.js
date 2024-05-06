@@ -8,7 +8,7 @@ import './Home.css';
 import Slider from 'react-slick';
 import { AuthContext } from '../context/AuthProvider';
 
-const Statistics = ({ incidentsReported, volunteersSignedUp }) => {
+const Statistics = ({ incidentsReported, peopleSaved, volunteersSignedUp }) => {
   return (
     <div className="statistics">
       <div className="statistic">
@@ -16,8 +16,12 @@ const Statistics = ({ incidentsReported, volunteersSignedUp }) => {
         <p>INCIDENTS REPORTED</p>
       </div>
       <div className="statistic">
+        <h3>{peopleSaved}</h3>
+        <p>PEOPLE SAVED</p>
+      </div>
+      <div className="statistic">
         <h3>{volunteersSignedUp}</h3>
-        <p>REGISTERED VOLUNTEERS </p>
+        <p>VOLUNTEERS REGISTERED</p>
       </div>
     </div>
   );
@@ -30,8 +34,9 @@ function Home() {
   const { guserEmail, setguserEmail } = useContext(AuthContext);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [incidentsReported, setIncidentsReported] = useState(0);
+  const [peopleSaved, setpeopleSaved] = useState(0);
   const [volunteersSignedUp, setVolunteersSignedUp] = useState(0);
+  const [incidentsReported, setIncidentsReported] = useState(0);
   const API = configData.API;
   const navigate = useNavigate();
   
@@ -57,20 +62,42 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    // Fetch statistics
-    const fetchStatistics = async () => {
+    const fetchIncidentsReported = async () => {
       try {
-        const response = await axios.get(API + 'statistics');
+        const response = await axios.get(API + 'incidentsReported');
         setIncidentsReported(response.data.incidentsReported);
-        // Simulate transition effect by delaying the update of volunteersSignedUp
-        setTimeout(() => {
-          setVolunteersSignedUp(response.data.volunteersSignedUp);
-        }, 100); // Adjust delay as needed
       } catch (error) {
-        console.error('Error fetching statistics:', error.message);
+        console.error('Error fetching incidents reported:', error.message);
       }
     };
-    fetchStatistics();
+    fetchIncidentsReported();
+  }, []);
+
+  useEffect(() => {
+    const fetchpeopleSaved = async () => {
+      try {
+        const response = await axios.get(API + 'totalSavesCount');
+        console.log(response.data.totalSavesCount)
+        setpeopleSaved(response.data.totalSavesCount);
+      } catch (error) {
+        console.error('Error fetching incidents reported:', error.message);
+      }
+    };
+    fetchpeopleSaved();
+  }, []);
+  
+  useEffect(() => {
+    // Fetch volunteer count
+    const fetchVolunteerCount = async () => {
+      try {
+        const response = await axios.get(API + 'volunteerCount');
+        console.log(response.data)
+          setVolunteersSignedUp(response.data.count);
+      } catch (error) {
+        console.error('Error fetching volunteer count:', error.message);
+      }
+    };
+    fetchVolunteerCount();
   }, []);
 
 
@@ -169,7 +196,7 @@ function Home() {
           </div>
           <p>{transcript}</p>
         </div>
-        <Statistics incidentsReported={incidentsReported} volunteersSignedUp={volunteersSignedUp} />
+        <Statistics peopleSaved={peopleSaved} volunteersSignedUp={volunteersSignedUp} incidentsReported={incidentsReported} />
       </div>
     </div>
   );

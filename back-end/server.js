@@ -420,8 +420,9 @@ app.use(
     // count Incidents
     app.get('/incidentCount', async (req, res) => {
       try {
-          const incidentCount = await DisasterIncident.countDocuments();
-          res.status(200).json({ incidentCount: incidentCount });
+          const incidentCount = await IncidentVariable.findOne();
+          console.log(incidentCount.incidentCount)
+          res.status(200).json({ incidentCount: incidentCount.incidentCount });
       } catch (error) {
           console.error(error);
           res.status(500).json({ message: "Internal server error" });

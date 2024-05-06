@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const volunteerSaveSchema = mongoose.Schema(
     {
-        volunteerEmail : { type : String, require : true},
+        volunteerEmail : { type : String, require : true, unique : true},
+        incidentId : { type: mongoose.Schema.Types.ObjectId, ref: 'DisasterIncident'},
         savesCount : {type : Number}
     },
     {

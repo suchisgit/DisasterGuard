@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const express = require('express')
 const mongoose = require('mongoose');
 const app = express()
@@ -16,7 +15,8 @@ const {
   HarmCategory,
   HarmBlockThreshold,
 } = require("@google/generative-ai");
-const {twitterClient} = require("./twitterClient.js")
+const {twitterClient} = require("./twitterClient.js");
+const { ObjectId } = require('mongodb');
 
 const API = "http://localhost:3001/"
 
@@ -177,9 +177,6 @@ app.use(
         }
         user.role = "volunteer"
         await user.save();
-        volunteerReqBody = { "volunteerEmail" : email , "savesCount": 0}
-        const saveVolunteer = await VolunteerSave.create(volunteerReqBody)
-        console.log(saveVolunteer)
         res.status(200).json({ success: true, message: 'User record updated & successfully made as volunteer.' })
       } catch (error) {
         console.log(error)
@@ -226,16 +223,23 @@ app.use(
       try {
         console.log("brosky......")
         const volunteerEmail = req.body.email
+        const incidentId = req.body.incidentId
+        console.log("incident id:", incidentId)
         console.log({"volunteerEmail" : volunteerEmail})
         const volunteer = await VolunteerSave.findOne({"volunteerEmail" : volunteerEmail})
         console.log(volunteer)
         if (volunteer){
           volunteer.savesCount += 1;
           await volunteer.save();
+          await axios.delete(`${API}incident/${incidentId}`)
           res.status(200).json({success : "incremented volunteer count by 1"} )
         }else{
-          console.log("volunteer not found")
-          res.status(404).json({failed : "volunteer not found"} )
+          volunteerReqBody = { "volunteerEmail" : volunteerEmail , "incidentId" : incidentId, "savesCount": 1}
+          console.log(volunteerReqBody)
+          const saveVolunteer = await VolunteerSave.create(volunteerReqBody)
+          console.log(saveVolunteer)
+          await axios.delete(`${API}incident/${incidentId}`)
+          res.status(200).json( {success : "first save for this volunteer, incremented volunteer count to 1"} )
         }
       } catch (error) {
         console.log(error)
@@ -366,11 +370,36 @@ app.use(
       }
     })
 
+    // delete incident
+    app.delete('/incident/:id', async(req,res)=>{
+      try {
+        const incidentId = req.params.id;
+        const deletedIncident = await DisasterIncident.findByIdAndDelete(incidentId);
+        console.log(deletedIncident)
+        if (!deletedIncident) {
+          return res.status(404).json({ message: 'Incident not found' });
+        }
+        res.status(200).json({ message: 'Incident deleted successfully' });
+      } catch (error) {
+        console.log(error)
+      }
+    })
+   
+    // count Incidents
+    app.get('/incidentCount', async (req, res) => {
+      try {
+          const incidentCount = await DisasterIncident.countDocuments();
+          res.status(200).json({ incidentCount: incidentCount });
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: "Internal server error" });
+      }
+    });
+
     // to get all the incidents from the db
     app.get('/allIncidentLocations', async(req,res)=>{
       try {
         const allIncidents = await DisasterIncident.find({});
-
         const locations = allIncidents.map( incident => {
           if (incident.latitude && incident.longitude){
             return {

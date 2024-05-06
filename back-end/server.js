@@ -6,6 +6,7 @@ const port = 3001
 const User = require('./model/userModel')
 const DisasterIncident = require('./model/disasterIncidentModel')
 const VolunteerSave = require('./model/volunteerSaveModel')
+const IncidentVariable = require('./model/incidentVariableModel')
 const cors = require("cors")
 const twilio = require("twilio")
 const axios = require('axios')
@@ -212,6 +213,9 @@ app.use(
       try {
         console.log(req.body)
         const disasterLocation = await DisasterIncident.create(req.body)
+        const incrementIncidentCount = await axios.post(`${API}incrementCount`)
+        console.log(incrementIncidentCount)
+        console.log("incremented IncidentCount")
         res.status(200).json(JSON.stringify(disasterLocation))
       } catch (error) {
         console.log(error)
@@ -282,6 +286,26 @@ app.use(
       }
     })
 
+    app.post('/incrementCount', async(req,res)=>{
+      try {
+        const incidentVariable = await IncidentVariable.findOne();
+        // If the incident variable document doesn't exist, create one with count initialized to 1
+        if (!incidentVariable) {
+            const newIncidentVariable = new IncidentVariable({ incidentCount: 1 });
+            await newIncidentVariable.save();
+            return res.status(200).json({ message: 'Incremented count by 1', newCount: 1 });
+        }
+
+        // Increment the count by one
+        incidentVariable.incidentCount += 1;
+        await incidentVariable.save();
+
+        return res.status(200).json({ message: 'Incremented count by 1', newCount: incidentVariable.incidentCount });
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error.message })
+      }
+    })
 
     // Gemini AI API utilization to detect if it's a danger or not
     app.post('/isDisaster', async (req,res) =>{

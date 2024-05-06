@@ -40,7 +40,8 @@
     display: flex;
     justify-content: space-around;
     margin-top: 80px;
-    gap: 100px;
+    margin-left: 80px;
+    gap: 90px;
     transition: all 0.5s;
   }
   

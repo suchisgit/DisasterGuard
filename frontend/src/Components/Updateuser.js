@@ -67,9 +67,11 @@ function Activity() {
               .then(response => {
                 console.log('User details updated successfully');
                 setIsEditing(false);
+                alert('User details updated successfully'); 
               })
               .catch(error => {
                 console.error('Error updating user details:', error);
+                alert('Error in updating user details'); 
               });
         };
   return (

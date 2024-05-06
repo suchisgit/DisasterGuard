@@ -62,7 +62,7 @@ function Header() {
                                     <Link className="nav-link" to="/peopleindanger">People In Crisis</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/supportmaterial" >Volunteer Support Material</Link>
+                                    <Link className="nav-link" to="/support" >Volunteer Support Material</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/updateuser">Update Profile</Link>

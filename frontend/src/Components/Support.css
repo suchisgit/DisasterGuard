@@ -1,8 +1,8 @@
-.card {
+.support_card {
     margin-bottom: 20px; /* Add space between cards */
   }
   
-  .card-img1 {
+  .support_card-img1 {
     height: 300px; /* Set the height of the background image */
     background-size: cover; /* Make the background image cover the entire div */
     background-position: center; /* Center the background image */
@@ -11,7 +11,7 @@
     background-image: url(../images/save.jpg);
     justify-content:space-evenly;
 } /* Set font color to white */
-.card-img2 {
+.support_card-img2 {
     height: 300px; /* Set the height of the background image */
     background-size: cover; /* Make the background image cover the entire div */
     background-position: center; /* Center the background image */
@@ -20,7 +20,7 @@
     background-image: url(../images/donate.jpg);
     justify-content:space-evenly;
 } /* Set font color to white */
-.card-img3 {
+.support_card-img3 {
     height: 300px; /* Set the height of the background image */
     background-size: cover; /* Make the background image cover the entire div */
     background-position: center; /* Center the background image */
@@ -30,13 +30,13 @@
     justify-content:space-evenly;
 } /* Set font color to white */
   
-  .card-title {
+  .support_card-title {
     position: absolute; /* Set position to absolute to position title */
     top: 10px; /* Adjust top position */
     left: 10px; /* Adjust left position */
   }
   
-  .card-text {
+  .support_card-text {
     padding: 20px; 
     margin-top: 70px;/* Add padding inside the card text */
     justify-content:space-evenly;

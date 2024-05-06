@@ -41,6 +41,17 @@ function Peopleindanger() {
 
         return timeAgo;
     }
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(API + 'allIncidents');
+            setMarkers(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     useEffect(() => {
         if (role == '') {
            //navigate('/');
@@ -48,15 +59,6 @@ function Peopleindanger() {
         else if (role == 'user') {
             navigate('/updateuser');
         }
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(API + 'allIncidents');
-                setMarkers(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
         fetchData();
 
     }, []);
@@ -73,8 +75,9 @@ function Peopleindanger() {
                 volunteerEmail: volunteerEmail
             };
             console.log(requestBody);
-            //await axios.post(API + 'saveThisPerson', requestBody);
-
+            const res = await axios.post(API + 'saveThisPerson', requestBody);
+            fetchData();
+            console.log(res);
         } catch (error) {
             console.error('Error helping person:', error);
         }

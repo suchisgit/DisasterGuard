@@ -18,8 +18,8 @@ const {
 } = require("@google/generative-ai");
 const {twitterClient} = require("./twitterClient.js");
 const { ObjectId } = require('mongodb');
-
-const API = "http://localhost:3001/"
+const publicIp = process.env.PUBLIC_IP
+const API = publicIp + ":3001/"
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN

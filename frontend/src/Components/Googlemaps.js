@@ -3,17 +3,26 @@ import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import App from '../App';
 import configData from '../config.json';
 import axios from 'axios';
-
+import { AuthContext } from '../context/AuthProvider';
+import { useNavigate } from "react-router-dom";
 
 const sanJose = { lat: 37.335480, lng: -121.893028 };
 
 function Googlemaps() {
-
+    const { role, setrole } = useContext(AuthContext);
     const [markers, setMarkers] = useState([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
+        if (role == '') {
+            navigate('/');
+          }
+          else if (role == 'user') {
+            navigate('/updateuser');
+          }
         const fetchData = async () => {
             try {
-                const response = await axios.get(API + 'allIncidents');
+                const response = await axios.get(API + 'allIncidentLocations');
                 setMarkers(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);

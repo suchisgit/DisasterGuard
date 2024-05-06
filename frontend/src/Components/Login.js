@@ -46,7 +46,11 @@ function Login() {
             const response = await axios.post(API +'user/validate', user_details);
             console.log('login successful!', response.data);
             setrole(response.data.role);
+            console.log("role has been set");
+            console.log(response.data.role);
             setguserEmail(response.data.email);
+            console.log("email has been set");
+            console.log(response.data.email);
             setguserName(response.data.name);
             setguserPassword(response.data.password);
             setguserPhonenumber(response.data.phoneNumber);

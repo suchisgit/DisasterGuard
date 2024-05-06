@@ -58,28 +58,28 @@ const Statistics = ({ incidentsReported, peopleSaved, volunteersSignedUp }) => {
 
   return (
     <div className="statistics">
-      <div className="statistic">
-        <h3>{animatedNumbers.incidentsReported}</h3>
-        <p>
-          <span>INCIDENTS REPORTED</span>
-          <FaExclamationCircle className="statistic-icon red" />
-        </p>
-      </div>
-      <div className="statistic">
-        <h3>{animatedNumbers.peopleSaved}</h3>
-        <p>
-          <span>PEOPLE SAVED</span>
-          <FaUser className="statistic-icon green" />
-        </p>
-      </div>
-      <div className="statistic">
-        <h3>{animatedNumbers.volunteersSignedUp}</h3>
-        <p>
-          <span>VOLUNTEERS REGISTERED</span>
-          <FaHandshake className="statistic-icon blue" />
-        </p>
-      </div>
+    <div className="statistic">
+      <h3>{animatedNumbers.incidentsReported}</h3>
+      <p>
+        <span>INCIDENTS REPORTED</span>
+        <FaExclamationCircle className="statistic-icon red" />
+      </p>
     </div>
+    <div className="statistic">
+      <h3>{animatedNumbers.peopleSaved}</h3>
+      <p>
+        <span>PEOPLE SAVED</span>
+        <FaUser className="statistic-icon green" />
+      </p>
+    </div>
+    <div className="statistic">
+      <h3>{animatedNumbers.volunteersSignedUp}</h3>
+      <p>
+        <span>VOLUNTEERS REGISTERED</span>
+        <FaHandshake className="statistic-icon blue" />
+      </p>
+    </div>
+  </div>
   );
 };
 
@@ -120,8 +120,8 @@ function Home() {
   useEffect(() => {
     const fetchIncidentsReported = async () => {
       try {
-        const response = await axios.get(API + 'incidentsReported');
-        setIncidentsReported(response.data.incidentsReported);
+        const response = await axios.get(API + 'incidentCount');
+        setIncidentsReported(response.data.incidentCount);
       } catch (error) {
         console.error('Error fetching incidents reported:', error.message);
       }
@@ -133,7 +133,6 @@ function Home() {
     const fetchpeopleSaved = async () => {
       try {
         const response = await axios.get(API + 'totalSavesCount');
-        console.log(response.data.totalSavesCount)
         setpeopleSaved(response.data.totalSavesCount);
       } catch (error) {
         console.error('Error fetching incidents reported:', error.message);
@@ -246,12 +245,14 @@ function Home() {
 </div>
           </div>
         </div>
-        <div className="transcript">
-          <div className="message center">
-            <p>Your message will be displayed here</p>
-          </div>
-          <p>{transcript}</p>
-        </div>
+        <div className="transcript-container">
+  <div className="message center">
+    <p>Your message will be displayed here</p>
+  </div>
+  <div className="transcript">
+    <p>{transcript}</p>
+  </div>
+</div>
         <Statistics peopleSaved={peopleSaved} volunteersSignedUp={volunteersSignedUp} incidentsReported={incidentsReported} />
       </div>
     </div>

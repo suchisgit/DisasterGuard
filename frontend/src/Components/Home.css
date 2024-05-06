@@ -13,8 +13,17 @@
     flex-direction: column;
     align-items: center;
   }
+  .statistic p {
+    display: flex;
+    align-items: center;
+  }
+  
   .statistic p span {
-    margin-right: 10px;
+    margin-right: 9px;
+  }
+  
+  .statistic-icon {
+    font-size: 65px; /* Adjust the icon size as needed */
   }
   .statistic-icon.red {
     color: red;
@@ -40,9 +49,9 @@
   }
   
   .statistic h3 {
-    font-size:80px;
+    font-size:90px;
     color: white;
-    margin: 0;
+    margin-right: 50px;
   }
   
   .statistic p {
@@ -150,12 +159,30 @@
     color: white;
   }
   
-  .transcript {
-    padding: 10px;
+  .transcript-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: white;
   }
   
-  /* Add margin between flexbox items */
+  .transcript {
+    background-color: transparent;
+    text-align: left;
+    margin-top: 10px; /* Adjust margin as needed to provide space between the message and the transcript */
+    padding: 10px; 
+    color: white;
+    margin-right: 8px; /* Add padding to provide some space between the text and the border */
+    font-style:italic;
+    background-color: rgba(255, 255, 255, 0.354); 
+    resize: none;
+    width: 100%;
+    height: 60px;
+  }
+  
+  .message {
+    margin-bottom: 10px; /* Adjust margin as needed to provide space between the message and the transcript */
+  }
   .controls > * + * {
     margin-left: 30px;
   }

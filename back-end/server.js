@@ -155,7 +155,7 @@ app.use(
         }
         if (user.email == givenEmail && user.password == givenPassword) {
 
-          res.status(200).json({ login: true, email: user.email, role: user.role, name: user.name });
+          res.status(200).json({ login: true, email: user.email, role: user.role, name: user.name, phoneNumber: user.phoneNumber, emergencyContact: user.emergencyPhoneNumber });
         } else {
           res.status(401).json({ login: false })
         }

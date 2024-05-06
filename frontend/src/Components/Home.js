@@ -88,6 +88,7 @@ function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [script, setScript] = useState('');
   const { guserEmail, setguserEmail } = useContext(AuthContext);
+  const {gemergencyContact, setgemergencyContact} = useContext(AuthContext);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [peopleSaved, setpeopleSaved] = useState(0);
@@ -175,8 +176,7 @@ function Home() {
       return;
     }  
     setScript(transcript);
-    var user_details = { email: guserEmail, latitude: latitude, longitude: longitude, voiceToTextData: transcript} 
-    
+    var user_details = { email: guserEmail, latitude: latitude, longitude: longitude, voiceToTextData: transcript, phoneNumber: gemergencyContact} 
       // Handle form submission, e.g., send data to backend
       try {
         const response = await axios.post(API +'isDisaster', user_details);

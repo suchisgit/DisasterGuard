@@ -10,12 +10,14 @@ function Header() {
     const { role, setrole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
+    const {gemergencyContact, setgemergencyContact}= useContext(AuthContext);
     const navigate = useNavigate();
     const logout = () => {
         setguserID('');
         setrole('');
         setguserEmail('');
         setguserName('');
+        gemergencyContact('');
        
     }
     

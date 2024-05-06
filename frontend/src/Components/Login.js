@@ -11,6 +11,7 @@ function Login() {
     const { role, setrole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
     const { guserName, setguserName } = useContext(AuthContext);
+    const {gemergencyContact, setgemergencyContact}= useContext(AuthContext);
     const [guserPassword, setguserPassword] = useState(AuthContext);
     const [guserPhonenumber, setguserPhonenumber] = useState(AuthContext);
     const navigate = useNavigate();
@@ -46,14 +47,12 @@ function Login() {
             const response = await axios.post(API +'user/validate', user_details);
             console.log('login successful!', response.data);
             setrole(response.data.role);
-            console.log("role has been set");
-            console.log(response.data.role);
             setguserEmail(response.data.email);
-            console.log("email has been set");
-            console.log(response.data.email);
             setguserName(response.data.name);
             setguserPassword(response.data.password);
-            setguserPhonenumber(response.data.phoneNumber);
+            setguserPhonenumber(response.data.emergencyContact);
+            setgemergencyContact(response.data.emergencyContact);
+           
             if (role == 'user') {
                 console.log('logged in as user');
                 navigate('/');

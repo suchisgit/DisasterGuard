@@ -21,9 +21,10 @@ function App() {
   const [role, setrole] = useState('');
   const [guserEmail, setguserEmail] = useState('');
   const [guserName, setguserName] = useState('');
+  const [gemergencyContact, setgemergencyContact] = useState('');
 
   return (
-    <AuthContext.Provider value={{guserID, setguserID,role, setrole,guserEmail, setguserEmail,guserName, setguserName}}>
+    <AuthContext.Provider value={{guserID, setguserID,role, setrole,guserEmail, setguserEmail,guserName, setguserName, gemergencyContact, setgemergencyContact}}>
     <div className="App">
       <Navigationbar>
       </Navigationbar>

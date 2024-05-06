@@ -11,10 +11,11 @@ const AuthProvider = ({ children }) => {
   const [guserEmail, setguserEmail] = useState('');
   const [guserPassword, setguserPassword] = useState('');
   const [guserPhonenumber, setguserPhonenumber] = useState('');
+  const [gemergencyContact, setgemergencyContact]= useState('');
 
   return (
     <AuthContext.Provider value={{ guserID, setguserID, role, setrole, guserEmail, setguserEmail, guserName, 
-    setguserName, guserPassword, setguserPassword, guserPhonenumber, setguserPhonenumber }}>
+    setguserName, guserPassword, setguserPassword, guserPhonenumber, setguserPhonenumber, gemergencyContact, setgemergencyContact }}>
       {children}
     </AuthContext.Provider>
   );

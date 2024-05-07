@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthProvider';
 import configData from '../config.json';
 import { FaEnvelope, FaLock, FaUser, FaPhone } from 'react-icons/fa';
 import './Register.css'; // Import CSS for styling
+import Modal from './modal';
 
 function Register() {
     const { role, setrole } = useContext(AuthContext);
@@ -21,8 +22,27 @@ function Register() {
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [emergencyPhoneNumberError, setEmergencyPhoneNumberError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [showModalError, setShowModalError] = useState(false);
     const API = configData.API;
-
+    const handleOpenModal = () => {
+        setShowModal(true);
+       
+      };
+    
+      const handleCloseModal = () => {
+        setShowModal(false);
+        navigate('/login');
+      };
+      const handleOpenModalError = () => {
+        setShowModalError(true);
+       
+      };
+    
+      const handleCloseModalError= () => {
+        setShowModalError(false);
+        
+      };
     useEffect(() => {
         if(role === 'user'){
             console.log('logged in as user');
@@ -84,16 +104,24 @@ function Register() {
         var user_details = {name: name, email: email, password: password, phoneNumber: phoneNumber, emergencyName:emergencyName, emergencyPhoneNumber:emergencyPhoneNumber }
         try {
             const response = await axios.post(API +'addUser', user_details);
+            if (response.status === 200){
+            handleOpenModal();
             setName("");
             setEmail("");
             setPassword("");
             setPhoneNumber("");
             setEmergencyName("");
             setEmergencyPhoneNumber("");
-            alert("Registration successful, please login to access the website");
-            navigate('/login');
+            
+            
+            }
+            else{
+                handleOpenModalError();
+               
+            }
         } catch (error) {
             console.error('Registration failed!', error.response.data);
+            handleOpenModalError();
         }
     };
 
@@ -147,9 +175,23 @@ function Register() {
                                 </div>
                                 <button type="submit" className="btn btn-primary btn-block">Register</button>
                             </form>
+                            {showModal && (
+        <Modal
+          title="Confirmation"
+          body="You have successfully registered."
+          onClose={handleCloseModal}
+        />)}
+        {showModalError && (
+            <Modal
+              title="Error"
+              body="Registration failed! Email already exits. Please try again."
+              onClose={handleCloseModalError}
+            />
+      )}
                         </div>
                     </div>
                 </div>
+         
             </div>
         </div>
     );

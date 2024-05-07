@@ -81,7 +81,7 @@ function Register() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        var user_details = {name: name, email: email, password: password, phoneNumber: phoneNumber }
+        var user_details = {name: name, email: email, password: password, phoneNumber: phoneNumber, emergencyName:emergencyName, emergencyPhoneNumber:emergencyPhoneNumber }
         try {
             const response = await axios.post(API +'addUser', user_details);
             setName("");

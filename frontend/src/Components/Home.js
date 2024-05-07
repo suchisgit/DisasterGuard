@@ -8,6 +8,8 @@ import './Home.css';
 import Slider from 'react-slick';
 import { AuthContext } from '../context/AuthProvider';
 import { FaExclamationCircle, FaUser, FaHandshake } from 'react-icons/fa';
+import Modal from './modal';
+
 
 const Statistics = ({ incidentsReported, peopleSaved, volunteersSignedUp }) => {
   const [animatedNumbers, setAnimatedNumbers] = useState({
@@ -96,8 +98,24 @@ function Home() {
   const [incidentsReported, setIncidentsReported] = useState(0);
   const API = configData.API;
   const navigate = useNavigate();
-  
+  const [showModal, setShowModal] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  
+  const handleOpenModalError = () => {
+    setShowModalError(true);
+  };
+
+  const handleCloseModalError = () => {
+    setShowModalError(false);
+  };
 
   const {
     transcript,
@@ -181,12 +199,14 @@ function Home() {
       try {
         const response = await axios.post(API +'isDisaster', user_details);
         if (response.status === 200) {
-          window.alert('Successfully sent the message');
+          handleOpenModal();
           resetTranscript();
         } else {
+          handleOpenModalError();
           throw new Error('Failed to send the message');
         }
       } catch (error) {
+        handleOpenModalError();
         console.error('Error in sending the message', error.message);
         throw error;
       }
@@ -241,6 +261,7 @@ function Home() {
     onClick={handleSendMessage}
     disabled={transcript.trim() === '' || isRecording}
   />
+  
   <p className="control-text">Send Message</p>
 </div>
           </div>
@@ -254,7 +275,23 @@ function Home() {
   </div>
 </div>
         <Statistics peopleSaved={peopleSaved} volunteersSignedUp={volunteersSignedUp} incidentsReported={incidentsReported} />
+        {showModal && (
+        <Modal
+          title="Confirmation"
+          body="Your message has been successfully delivered."
+          onClose={handleCloseModal}
+        />
+      )}
+       {showModalError && (
+        <Modal
+          title="Error"
+          body="Failed to send the message. Please try again."
+          onClose={handleCloseModalError}
+        />
+      )}
       </div>
+      
+    
     </div>
   );
 }

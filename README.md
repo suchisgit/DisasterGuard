@@ -41,6 +41,6 @@ It has multiple API Keys dependecies, generate all the necessary API keys and de
      npm start <br>
 
 ### step 5: <br>
-  After above steps are performed you should be able to see the disaster guard application running in localhost:3000, We have later hosted the application in EC2 the used that public IP to show in our application.
+  After above steps are performed you should be able to see the disaster guard application running in localhost:3000, We have later hosted the application in EC2 the used that public IP to access our application.
      
 
